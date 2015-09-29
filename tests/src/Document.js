@@ -69,3 +69,17 @@ test('create a html layout', () => {
     html.appendChild(body);
     expect(fragment.innerHTML, '<!DOCTYPE html><html><head></head><body></body></html>');
 });
+
+test('Set documentElement content changes document.body, document.head', () => {
+    let document = new Document();
+    document.documentElement.innerHTML = '<!DOCTYPE html><html><head><title>Hello</title>' +
+        '</head><body>World</body></html>';
+    expect(document.body.textContent, 'World');
+    expect(document.head.querySelector('title').textContent, 'Hello');
+});
+
+test('Check document.location process', () => {
+    let document = new Document();
+    document.location = 'http://some.url/page';
+    expect(document.location.hostname, 'some.url');
+});

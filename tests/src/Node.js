@@ -68,3 +68,26 @@ test('Node event dispatch', () => {
     assert.isTrue(div._eventsCapturingPhase.has('domloadready'));
     div.dispatchEvent(event);
 });
+
+test('Node clone', () => {
+    const document = new Document();
+    const div = document.createElement('div');
+    div.setAttribute('test', 'test');
+    let clone = div.cloneNode();
+    assert.isNull(clone.ownerDocument);
+    assert.isNull(clone.parentNode);
+    assert.equal(clone.getAttribute('test'), 'test');
+    assert.equal(clone.tagName, 'div');
+});
+
+test('Node clone deep', () => {
+    const document = new Document();
+    const div = document.createElement('div');
+    div.innerHTML = '<span><i class="me">Some text</i></span>';
+    div.setAttribute('test', 'test');
+    let clone = div.cloneNode(true);
+    assert.isNull(clone.ownerDocument);
+    assert.isNull(clone.parentNode);
+    assert.equal(clone.getAttribute('test'), 'test');
+    assert.equal(clone.querySelector('span i.me').textContent, 'Some text');
+});

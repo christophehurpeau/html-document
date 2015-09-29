@@ -163,6 +163,10 @@ export default class Element extends ParentNode {
         let helper = new QuerySelectorHelper(this);
         return helper.parseAll(query);
     }
+
+    get attributes() {
+        return this._attributes;
+    }
 }
 
 /**

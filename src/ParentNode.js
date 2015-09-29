@@ -1,5 +1,6 @@
 import Node from './Node';
 import parse from './parse';
+import cloneNodeHelper from './utils/cloneNodeHelper';
 
 /**
  * The ParentNode interface contains methods that are particular to Node objects that can have children.
@@ -72,6 +73,11 @@ export default class ParentNode extends Node {
             }
         });
         return result;
+    }
+
+    cloneNode(deep) {
+        deep = deep || false;
+        return cloneNodeHelper(this, deep);
     }
 
     /**
@@ -272,6 +278,15 @@ export default class ParentNode extends Node {
         }
 
         return child;
+    }
+
+    /**
+     * Method returns true if node has child nodes.
+     *
+     * @returns {boolean}
+     */
+    hasChildNodes() {
+        return this._childNodes && this._childNodes.length > 0;
     }
 
     /**

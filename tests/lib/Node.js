@@ -75,4 +75,27 @@ test('Node event dispatch', function () {
     _proclaim2['default'].isTrue(div._eventsCapturingPhase.has('domloadready'));
     div.dispatchEvent(event);
 });
+
+test('Node clone', function () {
+    var document = new Document();
+    var div = document.createElement('div');
+    div.setAttribute('test', 'test');
+    var clone = div.cloneNode();
+    _proclaim2['default'].isNull(clone.ownerDocument);
+    _proclaim2['default'].isNull(clone.parentNode);
+    _proclaim2['default'].equal(clone.getAttribute('test'), 'test');
+    _proclaim2['default'].equal(clone.tagName, 'div');
+});
+
+test('Node clone deep', function () {
+    var document = new Document();
+    var div = document.createElement('div');
+    div.innerHTML = '<span><i class="me">Some text</i></span>';
+    div.setAttribute('test', 'test');
+    var clone = div.cloneNode(true);
+    _proclaim2['default'].isNull(clone.ownerDocument);
+    _proclaim2['default'].isNull(clone.parentNode);
+    _proclaim2['default'].equal(clone.getAttribute('test'), 'test');
+    _proclaim2['default'].equal(clone.querySelector('span i.me').textContent, 'Some text');
+});
 //# sourceMappingURL=Node.js.map
