@@ -259,4 +259,14 @@ test('ParentNode _closestParent', function () {
     _proclaim2['default'].isUndefined(span2._closestParent('test'));
     _proclaim2['default'].isUndefined(span1._closestParent('span'));
 });
+
+test('hasChildNodes', function () {
+    var parentNode = new ParentNode();
+    expect(parentNode.hasChildNodes(), false);
+    var span1 = document.createElement('span');
+    var span2 = document.createElement('span');
+    parentNode.appendChild(span1);
+    parentNode.appendChild(span2);
+    expect(parentNode.hasChildNodes(), true);
+});
 //# sourceMappingURL=ParentNode.js.map

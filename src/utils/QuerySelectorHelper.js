@@ -98,6 +98,10 @@ class QuerySelectorHelper {
             });
         }
 
+        if (itsMe && rule.hasOwnProperty('id')) {
+            itsMe &= element.getAttribute('id') === rule.id;
+        }
+
         if (!itsMe) {
             return this.processRule(element, rule);
         }

@@ -252,3 +252,13 @@ test('ParentNode _closestParent', () => {
     assert.isUndefined(span2._closestParent('test'));
     assert.isUndefined(span1._closestParent('span'));
 });
+
+test('hasChildNodes', () => {
+    let parentNode = new ParentNode();
+    expect(parentNode.hasChildNodes(), false);
+    let span1 = document.createElement('span');
+    let span2 = document.createElement('span');
+    parentNode.appendChild(span1);
+    parentNode.appendChild(span2);
+    expect(parentNode.hasChildNodes(), true);
+});

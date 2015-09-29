@@ -25,6 +25,14 @@ export default class Text extends Node {
     set textContent(textContent) {
         this.value = textContent;
     }
+
+    get nodeValue() {
+        return this.textContent;
+    }
+
+    set nodeValue(value) {
+        this.textContent = value;
+    }
 }
 
 /**

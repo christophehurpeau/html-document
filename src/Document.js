@@ -1,8 +1,10 @@
 import Node from './Node';
 import Comment from './Comment';
 import DocumentFragment from './DocumentFragment';
+import DocumentElementHelper from './utils/DocumentElementHelper';
 import HTMLElement from './HTMLElement';
 import Text from './Text';
+import URIUtils from 'urlutils';
 
 // HTML Elements
 import HTMLOptionElement from './HTMLElement/elements/HTMLOptionElement';
@@ -10,6 +12,8 @@ import HTMLSelectElement from './HTMLElement/elements/HTMLSelectElement';
 import HTMLTableElement from './HTMLElement/elements/HTMLTableElement';
 import HTMLTableSectionElement from './HTMLElement/elements/HTMLTableSectionElement';
 import HTMLTableRowElement from './HTMLElement/elements/HTMLTableRowElement';
+import HTMLLinkElement from './HTMLElement/elements/HTMLLinkElement';
+import HTMLAnchorElement from './HTMLElement/elements/HTMLAnchorElement';
 
 /**
  * @see https://developer.mozilla.org/en/docs/Web/API/Document
@@ -22,11 +26,13 @@ export default class Document extends Node {
      */
     constructor() {
         super();
-        this.documentElement = this.createElement('html');
+        this.documentElement = new DocumentElementHelper();
+        this.documentElement._ownerDocument = this;
         this.head = this.createElement('head');
         this.documentElement.appendChild(this.head);
         this.body = this.createElement('body');
         this.documentElement.appendChild(this.body);
+        this._location = new URIUtils('about:blank');
     }
 
     /**
@@ -84,6 +90,12 @@ export default class Document extends Node {
             case 'tbody':
                 element = new HTMLTableSectionElement();
                 element.nodeName = name;
+                break;
+            case 'link':
+                element = new HTMLLinkElement();
+                break;
+            case 'a':
+                element = new HTMLAnchorElement();
                 break;
             case 'tr':
                 element = new HTMLTableRowElement();
@@ -150,6 +162,14 @@ export default class Document extends Node {
 
     querySelectorAll() {
         throw new Error('Not implemented');
+    }
+
+    get location() {
+        return this._location;
+    }
+
+    set location(value) {
+        this._location.href = value;
     }
 }
 

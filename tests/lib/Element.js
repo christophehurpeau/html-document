@@ -67,4 +67,18 @@ test('Element querySelectorAll deep several', function () {
     _proclaim2['default'].equal(elements[2].textContent, '34');
     _proclaim2['default'].equal(elements[3].textContent, '4');
 });
+
+test('Element querySelectorAll returns nothing if not found', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div>1<div>2<div>3<span></span><div>4</div></div></div></div>';
+    var elements = document.body.querySelectorAll('i');
+    _proclaim2['default'].equal(elements.length, 0);
+});
+
+test('Elemeent querySelector with ID', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div>1<div>2<div>3<span></span><div>4</div></div></div></div>';
+    var elements = document.body.querySelectorAll('#element');
+    _proclaim2['default'].equal(elements.length, 0);
+});
 //# sourceMappingURL=Element.js.map

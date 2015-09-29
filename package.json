@@ -25,7 +25,9 @@
   "dependencies": {
     "babel-runtime": "^5.8.25",
     "css-selector-parser": "^1.1.0",
-    "htmlparser2": "^3.8.3"
+    "htmlparser2": "^3.8.3",
+    "urijs": "^1.16.1",
+    "urlutils": "0.0.3"
   },
   "scripts": {
     "preversion": "make pre-version",

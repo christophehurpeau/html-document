@@ -61,3 +61,17 @@ test('Element querySelectorAll deep several', () => {
     assert.equal(elements[2].textContent, '34');
     assert.equal(elements[3].textContent, '4');
 });
+
+test('Element querySelectorAll returns nothing if not found', () => {
+    const document = new Document();
+    document.body.innerHTML = '<div>1<div>2<div>3<span></span><div>4</div></div></div></div>';
+    let elements = document.body.querySelectorAll('i');
+    assert.equal(elements.length, 0);
+});
+
+test('Elemeent querySelector with ID', () => {
+    const document = new Document();
+    document.body.innerHTML = '<div>1<div>2<div>3<span></span><div>4</div></div></div></div>';
+    let elements = document.body.querySelectorAll('#element');
+    assert.equal(elements.length, 0);
+});

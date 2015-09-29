@@ -98,6 +98,19 @@ export default class Node {
         return '';
     }
 
+    /**
+     * @property Node#nodeValue
+     * @returns {string|null}
+     */
+    get nodeValue() {
+        return null;
+    }
+
+    /**
+     * @param {*} value
+     */
+    set nodeValue(value) {}
+
     _toHTML() {
         return this.outerHTML;
     }
