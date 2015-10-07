@@ -61,3 +61,27 @@ test('Element querySelectorAll deep several', () => {
     assert.equal(elements[2].textContent, '34');
     assert.equal(elements[3].textContent, '4');
 });
+
+test('Element querySelector complex rules', () => {
+    const document = new Document();
+    document.body.innerHTML = '<div><span class="first" data-attr="123">Text</span></div>' +
+        '<i data-attr="1">Skip me</i><input type="text"/><i data-attr="some words"></i>' +
+        '<i data-attr="some-words"></i>';
+    let elements = document.body.querySelectorAll('[data-attr^=1]');
+    assert.equal(elements.length, 2);
+    elements = document.body.querySelectorAll('[data-attr$=3]');
+    assert.equal(elements.length, 1);
+    elements = document.body.querySelectorAll('[data-attr~="some"]');
+    assert.equal(elements.length, 1);
+    elements = document.body.querySelectorAll('[data-attr*="om"]');
+    assert.equal(elements.length, 2);
+});
+
+test('Element querySelector attribute rules', () => {
+    const document = new Document();
+    document.body.innerHTML = '<div><span class="first" data-attr="123">Text</span></div>' +
+        '<i data-attr="1">Skip me</i><input type="text"/><i data-attr="some words"></i>' +
+        '<i data-attr="some-words"></i>';
+    let elements = document.body.querySelectorAll('[data-attr]');
+    assert.equal(elements.length, 4);
+});

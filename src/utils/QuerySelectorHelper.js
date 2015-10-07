@@ -38,12 +38,54 @@ class QuerySelectorHelper {
         return this.result;
     }
 
+    /**
+     * Static method returning parser instance.
+     *
+     * @returns {CssSelectorParser}
+     */
     static get cssSelectorParser() {
         if (QuerySelectorHelper.parser === null) {
             QuerySelectorHelper.parser = new CssSelectorParser();
+            QuerySelectorHelper.parser.registerAttrEqualityMods('^', '$', '*', '~');
         }
 
         return QuerySelectorHelper.parser;
+    }
+
+    /**
+     * Method process element attributes to match attrRule structure
+     *
+     * @param element
+     * @param attrRule
+     * @returns {boolean}
+     */
+    static processAttribute(element, attrRule) {
+        if (!element.hasAttribute(attrRule.name)) {
+            return false;
+        }
+
+        let value = element.getAttribute(attrRule.name);
+
+        if ('operator' in attrRule) {
+            switch (attrRule.operator) {
+                case '^=':
+                    return value.indexOf(attrRule.value) === 0;
+                    break;
+                case '$=':
+                    return value.indexOf(attrRule.value) === value.length - attrRule.value.length;
+                    break;
+                case '~=':
+                    let words = value.split(' ');
+                    return words.some((word) => {
+                        return word === attrRule.value;
+                    });
+                case '*=':
+                    return value.indexOf(attrRule.value) !== -1;
+                default:
+                    return value === attrRule.value;
+            }
+        }
+        return true;
     }
 
     /**
@@ -94,7 +136,7 @@ class QuerySelectorHelper {
 
         if (itsMe && rule.hasOwnProperty('attrs')) {
             itsMe &= rule.attrs.some((attr)=> {
-                return element.hasAttribute(attr.name) && element.getAttribute(attr.name) === attr.value;
+                return QuerySelectorHelper.processAttribute(element, attr);
             });
         }
 
