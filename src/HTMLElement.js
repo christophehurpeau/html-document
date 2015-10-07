@@ -2,6 +2,7 @@ import Element from './Element';
 import CSSStyleDeclaration from './HTMLElement/CSSStyleDeclaration';
 import ClassList from './HTMLElement/ClassList';
 import escapeAttribute from './utils/escapeAttribute';
+import {attributeNameToProperty} from './utils/DOMStringMap.js';
 
 const voidElements = 'area base br col embed hr img input keygen link meta param source track wbr'.split(' ');
 
@@ -27,12 +28,20 @@ export default class HTMLElement extends Element {
          * @readonly
          */
         this.classList = new ClassList(this);
+        /**
+         * returns dataset object
+         * @member {DOMStringMap} HTMLElement#dataset
+         * @readonly
+         */
+        this.dataset = {};
+        // this.dataset = CreateDOMStringMap(this); @TODO Uncomment when Proxy available on stable
     }
 
     /**
      * The class of the element.
      *
      * @member {String} HTMLElement#className
+     * @returns {String}
      */
     get className() {
         return this.getAttribute('class');
@@ -54,6 +63,10 @@ export default class HTMLElement extends Element {
         if (attributeName === 'class') {
             this.classList._parse(value || '');
         }
+
+        if (attributeName.indexOf('data-') === 0) {
+            this.dataset[attributeNameToProperty(attributeName)] = value;
+        }
     }
 
     /**
@@ -65,5 +78,4 @@ export default class HTMLElement extends Element {
             return value + ' ' + attributeName + '="' + escapeAttribute(this._attributes[attributeName]) + '"';
         }, '') + '>' + (voidElements.indexOf(this.nodeName) !== -1 ? '' : this.innerHTML + '</' + this.nodeName + '>');
     }
-
 }
