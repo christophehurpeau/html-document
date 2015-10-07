@@ -74,11 +74,18 @@ class QuerySelectorHelper {
                 case '$=':
                     return value.indexOf(attrRule.value) === value.length - attrRule.value.length;
                     break;
+                case '~=':
+                    let words = value.split(' ');
+                    return words.some((word) => {
+                        return word === attrRule.value;
+                    });
+                case '*=':
+                    return value.indexOf(attrRule.value) !== -1;
                 default:
                     return value === attrRule.value;
             }
         }
-        return false;
+        return true;
     }
 
     /**
