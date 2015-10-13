@@ -7,6 +7,7 @@ import Text from './Text';
 import Url from './utils/Url';
 
 // HTML Elements
+import HTMLDocumentElement from './HTMLElement/elements/HTMLDocumentElement';
 import HTMLOptionElement from './HTMLElement/elements/HTMLOptionElement';
 import HTMLSelectElement from './HTMLElement/elements/HTMLSelectElement';
 import HTMLTableCaptionElement from './HTMLElement/elements/HTMLTableCaptionElement';
@@ -17,6 +18,7 @@ import HTMLTableSectionElement from './HTMLElement/elements/HTMLTableSectionElem
 import HTMLAnchorElement from './HTMLElement/elements/HTMLAnchorElement';
 
 const elementClasses = new Map([
+    ['html', HTMLDocumentElement],
     ['caption', HTMLTableCaptionElement],
     ['meta', HTMLMetaElement],
     ['option', HTMLOptionElement],
@@ -38,20 +40,8 @@ export default class Document extends ParentNode {
         /**
          * @type {HTMLElement}
          */
-        this.documentElement = this.createElement('html');
-        this.appendChild(this.documentElement);
-
-        /**
-         * @type {HTMLElement}
-         */
-        this.head = this.createElement('head');
-        this.documentElement.appendChild(this.head);
-
-        /**
-         * @type {HTMLElement}
-         */
-        this.body = this.createElement('body');
-        this.documentElement.appendChild(this.body);
+        this._documentElement = this.createElement('html');
+        this.appendChild(this._documentElement);
 
         this._location = new Url('about:blank');
         this._ownerDocument = this;
@@ -187,6 +177,39 @@ export default class Document extends ParentNode {
         return null;
     }
 
+    get documentElement() {
+        return this._documentElement;
+    }
+
+    get head() {
+        let head = this._documentElement.getElementsByTagName('head').shift();
+        if (!head) {
+            head = this.createElement('head');
+            this._documentElement.insertBefore(head, this.body);
+        }
+
+        return head;
+    }
+
+    get body() {
+        let body = this._documentElement.getElementsByTagName('body').shift();
+        if (!body) {
+            body = this.createElement('body');
+            this._documentElement.appendChild(body);
+        }
+
+        return body;
+    }
+
+    set body(body) {
+        let current = this._documentElement.getElementsByTagName('body').shift();
+        if (current) {
+            this._documentElement.replaceChild(body, current);
+        } else {
+            this._documentElement.appendChild(body);
+        }
+    }
+
     get location() {
         return this._location;
     }
@@ -202,17 +225,7 @@ export default class Document extends ParentNode {
     appendChild(child) {
         child = super.appendChild(child);
         if (child.nodeName === 'html') {
-            this.documentElement = child;
-
-            let heads = this.documentElement.getElementsByTagName('head');
-            if (heads.length > 0) {
-                this.head = heads[0];
-            }
-
-            let bodies = this.documentElement.getElementsByTagName('body');
-            if (bodies.length > 0) {
-                this.body = bodies[0];
-            }
+            this._documentElement = child;
         }
 
         return child;

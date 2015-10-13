@@ -8,6 +8,7 @@ var _proclaim = require('proclaim');
 var _proclaim2 = _interopRequireDefault(_proclaim);
 
 var expect = _proclaim2['default'].strictEqual;
+var throws = _proclaim2['default'].throws;
 
 var lib = '../../lib/';
 
@@ -112,6 +113,13 @@ test('create a html layout', function () {
     expect(fragment.innerHTML, '<!DOCTYPE html><html><head></head><body></body></html>');
 });
 
+test('Set documentElement content changes document.body, document.head', function () {
+    var document = new Document();
+    document.documentElement.innerHTML = '<!DOCTYPE html><html><head><title>Hello</title>' + '</head><body>World</body></html>';
+    expect(document.body.textContent, 'World');
+    expect(document.head.querySelector('title').textContent, 'Hello');
+});
+
 test('process query selector', function () {
     var document = new Document();
     document.body.innerHTML = '<div><span class="second">Text</span></div><i>Skip me</i><input type="text"/>';
@@ -138,5 +146,37 @@ test('Check document.location process', function () {
     var document = new Document();
     document.location = 'http://some.url/page';
     expect(document.location.hostname, 'some.url');
+});
+
+test('setting document.head should throw', function () {
+    var document = new Document();
+    throws(function () {
+        return document.head = '123';
+    });
+});
+
+test('getting empty document.head should return empty tag', function () {
+    var document = new Document();
+    expect(document.head.tagName, 'head');
+});
+
+test('getting head of normal document should return data', function () {
+    var document = new Document();
+    document.documentElement.innerHTML = '<html><head><title>Some</title></head></html>';
+    expect(document.head.innerHTML, '<title>Some</title>');
+});
+
+test('setting document.body replace body', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div></div>';
+    expect(document.body.children.length, 1);
+    document.body = document.createElement('body');
+    expect(document.body.children.length, 0);
+});
+
+test('setting document.body adds new body', function () {
+    var document = new Document();
+    document.body = document.createElement('body');
+    expect(document.body.children.length, 0);
 });
 //# sourceMappingURL=Document.js.map

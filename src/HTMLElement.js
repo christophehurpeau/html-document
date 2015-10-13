@@ -65,12 +65,14 @@ export default class HTMLElement extends Element {
      * @return {string}
      */
     get outerHTML() {
-        return '<' + this.nodeName +
-            Object.keys(this._attributes).reduce((value, attributeName) => value +
-                ' ' + attributeName + '="' +
-                escapeAttribute(this._attributes[attributeName]) + '"',
-            '') + '>' +
-            (voidElements.indexOf(this.nodeName) !== -1 ? '' : this.innerHTML + '</' + this.nodeName + '>');
+        return '<' +
+            this.nodeName +
+            Object.keys(this._attributes).reduce(
+                (value, attributeName) => value +
+                ' ' + attributeName +
+                '="' + escapeAttribute(this._attributes[attributeName]) + '"', '')
+            + '>'
+            + (voidElements.indexOf(this.nodeName) !== -1 ? '' : this.innerHTML + '</' + this.nodeName + '>');
     }
 
     get dataset() {

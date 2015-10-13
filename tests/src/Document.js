@@ -1,6 +1,7 @@
 /* global test */
 import assert from 'proclaim';
 const expect = assert.strictEqual;
+const throws = assert.throws;
 
 const lib = '../../lib/';
 
@@ -105,6 +106,14 @@ test('create a html layout', () => {
     expect(fragment.innerHTML, '<!DOCTYPE html><html><head></head><body></body></html>');
 });
 
+test('Set documentElement content changes document.body, document.head', () => {
+    let document = new Document();
+    document.documentElement.innerHTML = '<!DOCTYPE html><html><head><title>Hello</title>' +
+        '</head><body>World</body></html>';
+    expect(document.body.textContent, 'World');
+    expect(document.head.querySelector('title').textContent, 'Hello');
+});
+
 test('process query selector', () => {
     let document = new Document();
     document.body.innerHTML = '<div><span class="second">Text</span></div><i>Skip me</i><input type="text"/>';
@@ -131,4 +140,34 @@ test('Check document.location process', () => {
     let document = new Document();
     document.location = 'http://some.url/page';
     expect(document.location.hostname, 'some.url');
+});
+
+test('setting document.head should throw', () => {
+    let document = new Document();
+    throws(() => document.head = '123');
+});
+
+test('getting empty document.head should return empty tag', () => {
+    let document = new Document();
+    expect(document.head.tagName, 'head');
+});
+
+test('getting head of normal document should return data', () => {
+    let document = new Document();
+    document.documentElement.innerHTML = '<html><head><title>Some</title></head></html>';
+    expect(document.head.innerHTML, '<title>Some</title>');
+});
+
+test('setting document.body replace body', () => {
+    let document = new Document();
+    document.body.innerHTML = '<div></div>';
+    expect(document.body.children.length, 1);
+    document.body = document.createElement('body');
+    expect(document.body.children.length, 0);
+});
+
+test('setting document.body adds new body', () => {
+    let document = new Document();
+    document.body = document.createElement('body');
+    expect(document.body.children.length, 0);
 });
