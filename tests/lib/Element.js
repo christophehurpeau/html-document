@@ -91,4 +91,11 @@ test('Element nextElementSibling on only child', function () {
     var span = document.body.firstChild.firstElementChild;
     _proclaim2['default'].isNull(span.nextElementSibling);
 });
+
+test('getElementsByTagName returns everything if tag name not set', function () {
+    var document = new Document();
+    document.body.innerHTML = '<b></b><div><b></b></div>';
+    var collection = document.getElementsByTagName();
+    _proclaim2['default'].equal(collection.length, 4);
+});
 //# sourceMappingURL=Element.js.map

@@ -1,6 +1,7 @@
 import Node from './Node';
 import ParentNode from './ParentNode';
 import { querySelector as _querySelector, querySelectorAll as _querySelectorAll } from './utils/querySelectorHelper';
+import HTMLCollection from './utils/HTMLCollection';
 
 /**
  * The Element interface represents an object within a DOM document.
@@ -153,21 +154,13 @@ export default class Element extends ParentNode {
      * @param {string} tagName
      * @return {HTMLCollection}
      */
-    getElementsByTagName(tagName, _array) {
+    getElementsByTagName(tagName) {
         if (!tagName) {
-            return !_array ? this.children.slice() : _array.push(...this.children);
+            return new HTMLCollection(this, child => true);
         }
 
-        _array = _array || [];
         tagName = tagName.toLowerCase();
-        this.children.forEach(child => {
-            if (child.nodeName.toLowerCase() === tagName) {
-                _array.push(child);
-            } else if (child.childElementCount > 0) {
-                child.getElementsByTagName(tagName, _array);
-            }
-        });
-        return _array;
+        return new HTMLCollection(this, child => child.nodeName.toLowerCase() === tagName);
     }
 
     /**

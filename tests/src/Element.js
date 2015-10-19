@@ -86,3 +86,10 @@ test('Element nextElementSibling on only child', () => {
     let span = document.body.firstChild.firstElementChild;
     assert.isNull(span.nextElementSibling);
 });
+
+test('getElementsByTagName returns everything if tag name not set', () => {
+    const document = new Document();
+    document.body.innerHTML = '<b></b><div><b></b></div>';
+    let collection = document.getElementsByTagName();
+    assert.equal(collection.length, 4);
+});
