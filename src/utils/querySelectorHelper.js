@@ -1,6 +1,7 @@
 import { CssSelectorParser } from 'css-selector-parser';
 const cssParser = new CssSelectorParser();
 cssParser.registerAttrEqualityMods('^', '$', '*', '~', '|');
+cssParser.registerNestingOperators('>', '+', '~');
 
 /**
  * querySelectorHelper interface provides simple processing
@@ -16,7 +17,7 @@ cssParser.registerAttrEqualityMods('^', '$', '*', '~', '|');
 export function querySelector(element, query) {
     let rules = cssParser.parse(query);
 
-    const iterator = processElement(element, rules);
+    const iterator = processElementDeep(element, rules);
     const next = iterator.next();
 
     if (next && next.value) {
@@ -36,7 +37,7 @@ export function querySelectorAll(element, query) {
     let rules = cssParser.parse(query);
 
     const result = [];
-    for (let element of processElement(element, rules)) {
+    for (let element of processElementDeep(element, rules)) {
         result.push(element);
     }
 
@@ -46,14 +47,27 @@ export function querySelectorAll(element, query) {
 /**
  * Function processes one element using current rule
  *
- * @param element
- * @param rules
+ * @param {HTMLElement} element - element to check
+ * @param {*} rules - current rules to check against element
  * @return {boolean}
  */
 function* processElement(element, rules) {
     for (let child of element.children) {
         yield* processRules(child, rules);
-        yield* processElement(child, rules);
+    }
+}
+
+/**
+ * Function processes one element using current rule
+ *
+ * @param {HTMLElement} element - element to check
+ * @param {*} rules - current rules to check against element
+ * @return {boolean}
+ */
+function* processElementDeep(element, rules) {
+    for (let child of element.children) {
+        yield* processRules(child, rules);
+        yield* processElementDeep(child, rules);
     }
 }
 
@@ -97,7 +111,23 @@ function* processSelectors(element, selectors) {
             return;
         }
 
-        yield* processElement(element, { type: 'ruleSet', rule: rule.rule });
+        switch (rule.rule.nestingOperator) {
+            case '+':
+                const nextElementSibling = element.nextElementSibling;
+                if (nextElementSibling && matchRule(nextElementSibling, rule.rule)) {
+                    yield nextElementSibling;
+                }
+
+                break;
+            case '~':
+                yield* processElement(element.parentNode, { type: 'ruleSet', rule: rule.rule });
+                break;
+            case '>':
+                yield* processElement(element, { type: 'ruleSet', rule: rule.rule });
+                break;
+            default:
+                yield* processElementDeep(element, { type: 'ruleSet', rule: rule.rule });
+        }
 
         return;
     }

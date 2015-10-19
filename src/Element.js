@@ -87,6 +87,44 @@ export default class Element extends ParentNode {
     }
 
     /**
+     * Returns the {@link Element} immediately following the specified one in its parent's children list,
+     * or null if the specified element is the last one in the list.
+     *
+     * @type {Element}
+     * @readonly
+     */
+    get nextElementSibling() {
+        let children = this.parentNode.children;
+        if (children && children.length > 1) {
+            let index = children.indexOf(this);
+            if (index + 1 < children.length) {
+                return children[index + 1];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the Element immediately prior to the specified one in its parent's children list, or null
+     * if the specified element is the first one in the list.
+     *
+     * @type {Element}
+     * @readonly
+     */
+    get previousElementSibling() {
+        let children = this.parentNode.children;
+        if (children && children.length > 1) {
+            let index = children.indexOf(this);
+            if (index !== 0) {
+                return children[index - 1];
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Returns an unsigned long giving the amount of children that the object has.
      *
      * @type {number}

@@ -196,3 +196,50 @@ test('Element name equal or starts with "|="', () => {
     let elements = document.body.querySelectorAll('[data-attr|=123]');
     strictEqual(elements.length, 2);
 });
+
+test('Nesting with > combinator', () => {
+    const document = new Document();
+    document.body.innerHTML = '<div><span class="first" data-attr="123">Text</span></div>' +
+        '<div><i data-attr="123-other"><span>Skip me</span></i></div><input type="text"/>' +
+        '<i data-attr="123other"></i><i data-attr="other123-"></i>';
+    let elements = document.body.querySelectorAll('div > span');
+    strictEqual(elements.length, 1);
+});
+
+test('Nesting with + combinator', () => {
+    const document = new Document();
+    document.body.innerHTML = '<div><span class="first" data-attr="123">Text</span></div>' +
+        '<div><i data-attr="123-other"><span>Skip me</span></i></div><input type="text"/>' +
+        '<i data-attr="123other"></i><i data-attr="other123-"></i>';
+    let element = document.body.querySelector('input + i');
+    strictEqual(element.getAttribute('data-attr'), '123other');
+
+    document.body.innerHTML = '<div></div><p></p><div></div><a></a>';
+    element = document.body.querySelector('div + p');
+    strictEqual(element.tagName, 'p');
+});
+
+test('Nesting with ~ combinator', () => {
+    const document = new Document();
+    document.body.innerHTML = '<div><span class="first" data-attr="123">Text</span></div>' +
+        '<div><i data-attr="123-other"><span>Skip me</span></i></div><input type="text"/>' +
+        '<i data-attr="123other"></i><i data-attr="other123-"></i>';
+    let elements = document.body.querySelectorAll('input ~ i');
+    strictEqual(elements.length, 2);
+});
+
+test('Searching for nested structures', () => {
+    const document = new Document();
+    document.body.innerHTML =
+        '<b>' +
+            '<span>' +
+                '<b>' +
+                    '<span>' +
+                        '<b><span></span></b>' +
+                    '</span>' +
+                '</b>' +
+            '</span>' +
+        '</b>';
+    let elements = document.body.querySelectorAll('b > span');
+    strictEqual(elements.length, 3);
+});

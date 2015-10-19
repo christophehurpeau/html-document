@@ -35,4 +35,60 @@ test('Element getElementsByTagName should search elements everywhere', function 
     var metas = document.getElementsByTagName('meta');
     _proclaim2['default'].equal(metas.length, 3);
 });
+
+test('Element firstElementChild', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a></div>';
+    var div = document.body.firstChild;
+    _proclaim2['default'].equal(div.firstElementChild.tagName, 'span');
+});
+
+test('Element lastElementChild', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a></div>';
+    var div = document.body.firstChild;
+    _proclaim2['default'].equal(div.lastElementChild.tagName, 'a');
+});
+
+test('Element nextElementSibling', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a></div>';
+    var span = document.body.firstChild.firstElementChild;
+    _proclaim2['default'].equal(span.nextElementSibling.tagName, 'b');
+});
+
+test('Element nextElementSibling on last element', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a></div>';
+    var a = document.body.firstChild.lastElementChild;
+    _proclaim2['default'].isNull(a.nextElementSibling);
+});
+
+test('Element previousElementSibling', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a></div>';
+    var a = document.body.firstChild.lastElementChild;
+    _proclaim2['default'].equal(a.previousElementSibling.tagName, 'b');
+});
+
+test('Element previousElementSibling on first element', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a></div>';
+    var span = document.body.firstChild.firstElementChild;
+    _proclaim2['default'].isNull(span.previousElementSibling);
+});
+
+test('Element previousElementSibling on only child', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div><span></span></div>';
+    var span = document.body.firstChild.firstElementChild;
+    _proclaim2['default'].isNull(span.previousElementSibling);
+});
+
+test('Element nextElementSibling on only child', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div><span></span></div>';
+    var span = document.body.firstChild.firstElementChild;
+    _proclaim2['default'].isNull(span.nextElementSibling);
+});
 //# sourceMappingURL=Element.js.map

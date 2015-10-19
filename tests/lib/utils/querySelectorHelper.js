@@ -197,4 +197,36 @@ test('Element name equal or starts with "|="', function () {
     var elements = document.body.querySelectorAll('[data-attr|=123]');
     (0, _proclaim.strictEqual)(elements.length, 2);
 });
+
+test('Nesting with > combinator', function () {
+    var document = new _libDocument2['default']();
+    document.body.innerHTML = '<div><span class="first" data-attr="123">Text</span></div>' + '<div><i data-attr="123-other"><span>Skip me</span></i></div><input type="text"/>' + '<i data-attr="123other"></i><i data-attr="other123-"></i>';
+    var elements = document.body.querySelectorAll('div > span');
+    (0, _proclaim.strictEqual)(elements.length, 1);
+});
+
+test('Nesting with + combinator', function () {
+    var document = new _libDocument2['default']();
+    document.body.innerHTML = '<div><span class="first" data-attr="123">Text</span></div>' + '<div><i data-attr="123-other"><span>Skip me</span></i></div><input type="text"/>' + '<i data-attr="123other"></i><i data-attr="other123-"></i>';
+    var element = document.body.querySelector('input + i');
+    (0, _proclaim.strictEqual)(element.getAttribute('data-attr'), '123other');
+
+    document.body.innerHTML = '<div></div><p></p><div></div><a></a>';
+    element = document.body.querySelector('div + p');
+    (0, _proclaim.strictEqual)(element.tagName, 'p');
+});
+
+test('Nesting with ~ combinator', function () {
+    var document = new _libDocument2['default']();
+    document.body.innerHTML = '<div><span class="first" data-attr="123">Text</span></div>' + '<div><i data-attr="123-other"><span>Skip me</span></i></div><input type="text"/>' + '<i data-attr="123other"></i><i data-attr="other123-"></i>';
+    var elements = document.body.querySelectorAll('input ~ i');
+    (0, _proclaim.strictEqual)(elements.length, 2);
+});
+
+test('Searching for nested structures', function () {
+    var document = new _libDocument2['default']();
+    document.body.innerHTML = '<b>' + '<span>' + '<b>' + '<span>' + '<b><span></span></b>' + '</span>' + '</b>' + '</span>' + '</b>';
+    var elements = document.body.querySelectorAll('b > span');
+    (0, _proclaim.strictEqual)(elements.length, 3);
+});
 //# sourceMappingURL=querySelectorHelper.js.map
