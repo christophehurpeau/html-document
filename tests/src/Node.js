@@ -74,7 +74,7 @@ test('Node clone', () => {
     const div = document.createElement('div');
     div.setAttribute('test', 'test');
     let clone = div.cloneNode();
-    assert.isNull(clone.ownerDocument);
+    assert.deepEqual(clone.ownerDocument, document);
     assert.isNull(clone.parentNode);
     assert.equal(clone.getAttribute('test'), 'test');
     assert.equal(clone.tagName, 'div');
@@ -86,7 +86,7 @@ test('Node clone deep', () => {
     div.innerHTML = '<span><i class="me">Some text</i></span>';
     div.setAttribute('test', 'test');
     let clone = div.cloneNode(true);
-    assert.isNull(clone.ownerDocument);
+    assert.deepEqual(clone.ownerDocument, document);
     assert.isNull(clone.parentNode);
     assert.equal(clone.getAttribute('test'), 'test');
     assert.equal(clone.querySelector('span i.me').textContent, 'Some text');

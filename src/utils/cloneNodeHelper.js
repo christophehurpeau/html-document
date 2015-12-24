@@ -10,7 +10,7 @@ function cloneArguments(source, dest) {
 
 function cloneElementNode(element, deep) {
     const clone = element.ownerDocument.createElement(element.nodeName);
-    clone._ownerDocument = null;
+    clone._ownerDocument = element._ownerDocument;
     clone._parentNode = null;
     cloneArguments(element, clone);
 

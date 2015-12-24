@@ -81,7 +81,7 @@ test('Node clone', function () {
     var div = document.createElement('div');
     div.setAttribute('test', 'test');
     var clone = div.cloneNode();
-    _proclaim2['default'].isNull(clone.ownerDocument);
+    _proclaim2['default'].deepEqual(clone.ownerDocument, document);
     _proclaim2['default'].isNull(clone.parentNode);
     _proclaim2['default'].equal(clone.getAttribute('test'), 'test');
     _proclaim2['default'].equal(clone.tagName, 'div');
@@ -93,7 +93,7 @@ test('Node clone deep', function () {
     div.innerHTML = '<span><i class="me">Some text</i></span>';
     div.setAttribute('test', 'test');
     var clone = div.cloneNode(true);
-    _proclaim2['default'].isNull(clone.ownerDocument);
+    _proclaim2['default'].deepEqual(clone.ownerDocument, document);
     _proclaim2['default'].isNull(clone.parentNode);
     _proclaim2['default'].equal(clone.getAttribute('test'), 'test');
     _proclaim2['default'].equal(clone.querySelector('span i.me').textContent, 'Some text');
