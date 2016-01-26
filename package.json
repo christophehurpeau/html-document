@@ -19,7 +19,7 @@
   "devDependencies": {
     "coveralls": "^2.11.4",
     "proclaim": "^3.3",
-    "springbokjs-library": "^11.3.0",
+    "springbokjs-library": "^13.3.0",
     "xunit-file": "0.0.8"
   },
   "dependencies": {
