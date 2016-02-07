@@ -23,7 +23,7 @@
     "xunit-file": "0.0.8"
   },
   "dependencies": {
-    "babel-runtime": "^5.8.29",
+    "babel-runtime": "^6.5.0",
     "css-selector-parser": "^1.1.0",
     "htmlparser2": "^3.8.3"
   },
