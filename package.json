@@ -17,7 +17,7 @@
   "author": "Christophe Hurpeau <christophe@hurpeau.com> (http://christophe.hurpeau.com/)",
   "main": "./lib/Document.js",
   "devDependencies": {
-    "coveralls": "^2.11.4",
+    "coveralls": "^2.11.9",
     "proclaim": "^3.3",
     "springbokjs-library": "^11.3.0",
     "xunit-file": "0.0.8"
