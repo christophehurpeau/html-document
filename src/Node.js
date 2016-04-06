@@ -63,7 +63,11 @@ export default class Node {
      * @param {string} attributeValue
      */
     _setAttribute(attributeName, attributeValue) {
-        this._attributes[attributeName] = String(attributeValue);
+        if (attributeValue === undefined) {
+            this._attributes[attributeName] = null;
+        } else {
+            this._attributes[attributeName] = String(attributeValue);
+        }
     }
 
     /**

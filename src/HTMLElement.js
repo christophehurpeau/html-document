@@ -68,9 +68,14 @@ export default class HTMLElement extends Element {
         return '<' +
             this.nodeName +
             Object.keys(this._attributes).reduce(
-                (value, attributeName) => value +
-                ' ' + attributeName +
-                '="' + escapeAttribute(this._attributes[attributeName]) + '"', '')
+                (value, attributeName) => {
+                    let result = value + ' ' + attributeName;
+                    if (this._attributes[attributeName]) {
+                        result += '="' + escapeAttribute(this._attributes[attributeName]) + '"';
+                    }
+
+                    return result;
+                }, '')
             + '>'
             + (voidElements.indexOf(this.nodeName) !== -1 ? '' : this.innerHTML + '</' + this.nodeName + '>');
     }

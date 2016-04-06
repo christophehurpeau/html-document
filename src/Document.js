@@ -17,6 +17,7 @@ import HTMLTableRowElement from './HTMLElement/elements/HTMLTableRowElement';
 import HTMLTableSectionElement from './HTMLElement/elements/HTMLTableSectionElement';
 import HTMLAnchorElement from './HTMLElement/elements/HTMLAnchorElement';
 import HTMLFormElement from './HTMLElement/elements/HTMLFormElement';
+import HTMLLinkElement from './HTMLElement/elements/HTMLLinkElement';
 
 const elementClasses = new Map([
     ['html', HTMLDocumentElement],
@@ -31,6 +32,7 @@ const elementClasses = new Map([
     ['select', HTMLSelectElement],
     ['a', HTMLAnchorElement],
     ['form', HTMLFormElement],
+    ['link', HTMLLinkElement],
 ]);
 
 /**

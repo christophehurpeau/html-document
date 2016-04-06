@@ -78,7 +78,7 @@ test('Should get inner elements', function () {
 test('Should not set elements', function () {
     var elt = new HTMLFormElement();
     elt._ownerDocument = new Document();
-    (0, _proclaim.throws)( /** @function */function () {
+    (0, _proclaim.throws)(function () {
         elt.elements = [];
     });
 });
@@ -117,7 +117,7 @@ test('Should get inner elements length', function () {
 test('Should not set length', function () {
     var elt = new HTMLFormElement();
     elt._ownerDocument = new Document();
-    (0, _proclaim.throws)( /** @function */function () {
+    (0, _proclaim.throws)(function () {
         elt.length = 2;
     });
 });
@@ -181,8 +181,7 @@ test('Should call submit event on submit', function (done) {
     var elt = new HTMLFormElement();
     elt._ownerDocument = new Document();
 
-    elt.addEventListener('submit', /** @function 
-                                   * @param event */function (event) {
+    elt.addEventListener('submit', function () {
         done();
     }, true);
     elt.submit();
@@ -192,8 +191,7 @@ test('Should call submit event on reset', function (done) {
     var elt = new HTMLFormElement();
     elt._ownerDocument = new Document();
 
-    elt.addEventListener('reset', /** @function 
-                                  * @param event */function (event) {
+    elt.addEventListener('reset', function () {
         done();
     }, true);
     elt.reset();
@@ -217,8 +215,7 @@ test('Should not clear all values on reset if event is prevented', function () {
     input.type = 'text';
     input.setAttribute('value', 'some');
     elt.appendChild(input);
-    elt.addEventListener('reset', /** @function 
-                                  * @param event */function (event) {
+    elt.addEventListener('reset', function (event) {
         event.preventDefault();
     });
     elt.reset();

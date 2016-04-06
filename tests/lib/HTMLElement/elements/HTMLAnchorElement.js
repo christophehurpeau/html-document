@@ -14,7 +14,7 @@ var lib = '../../../../lib/';
 var HTMLAnchorElement = require(lib + 'HTMLElement/elements/HTMLAnchorElement');
 var Document = require(lib + 'Document');
 
-test('HTMLAnchorElement should have the nodeName == table ', function () {
+test('HTMLAnchorElement should have the nodeName == a ', function () {
     var elt = new HTMLAnchorElement();
     elt._ownerDocument = new Document();
     expect(elt.nodeName, 'a');
