@@ -1,3 +1,5 @@
+import NamedNodeMap from './NamedNodeMap';
+import Attr from './Attr';
 /**
  * A Node is an interface from which a number of DOM types inherit,
  * and allows these various types to be treated (or tested) similarly.
@@ -6,7 +8,7 @@
  */
 export default class Node {
     constructor() {
-        this._attributes = {};
+        this._attributes = new NamedNodeMap();
     }
 
     /**
@@ -29,7 +31,8 @@ export default class Node {
      * @return {string}
      */
     getAttribute(attributeName) {
-        return attributeName in this._attributes ? this._attributes[attributeName] : null;
+        let attribute = this._attributes.getNamedItem(attributeName);
+        return attribute ? attribute.value : null;
     }
 
     /**
@@ -40,7 +43,8 @@ export default class Node {
      * @return {boolean}
      */
     hasAttribute(attributeName) {
-        return attributeName in this._attributes;
+        let attribute = this._attributes.getNamedItem(attributeName);
+        return attribute ? true : false;
     }
 
     /**
@@ -52,7 +56,7 @@ export default class Node {
      */
     setAttribute(attributeName, attributeValue) {
         this._setAttribute(attributeName, attributeValue);
-        this._updatedAttribute(attributeName, this._attributes[attributeName]);
+        this._updatedAttribute(attributeName, attributeValue);
     }
 
     /**
@@ -63,11 +67,8 @@ export default class Node {
      * @param {string} attributeValue
      */
     _setAttribute(attributeName, attributeValue) {
-        if (attributeValue === undefined) {
-            this._attributes[attributeName] = null;
-        } else {
-            this._attributes[attributeName] = String(attributeValue);
-        }
+        const attribute = new Attr(attributeName, attributeValue);
+        this._attributes.setNamedItem(attribute);
     }
 
     /**
@@ -76,8 +77,8 @@ export default class Node {
      * @param {string} attributeName
      */
     removeAttribute(attributeName) {
-        if (this._attributes[attributeName] !== undefined) {
-            delete this._attributes[attributeName];
+        let attribute = this._attributes.removeNamedItem(attributeName);
+        if (attribute) {
             this._updatedAttribute(attributeName);
         }
     }

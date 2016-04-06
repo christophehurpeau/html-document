@@ -3,11 +3,8 @@ import Text from '../Text';
 import DOMException from '../DOMException';
 
 function cloneArguments(source, dest) {
-    const attributes = source.attributes;
-    for (const key in attributes) {
-        if (attributes.hasOwnProperty(key)) {
-            dest.setAttribute(key, source.getAttribute(key));
-        }
+    for (const attr of source.attributes) {
+        dest.setAttribute(attr.name, attr.value);
     }
 }
 
@@ -26,7 +23,6 @@ function cloneElementNode(element, deep) {
 
 function cloneDocumentFragment(fragment, deep) {
     const clone = fragment.ownerDocument.createDocumentFragment();
-    cloneArguments(fragment, clone);
 
     if (deep) {
         fragment.childNodes.forEach(child => clone.appendChild(cloneAnyNode(child, deep)));

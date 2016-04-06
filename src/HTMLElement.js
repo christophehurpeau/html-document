@@ -65,19 +65,18 @@ export default class HTMLElement extends Element {
      * @return {string}
      */
     get outerHTML() {
-        return '<' +
-            this.nodeName +
-            Object.keys(this._attributes).reduce(
-                (value, attributeName) => {
-                    let result = value + ' ' + attributeName;
-                    if (this._attributes[attributeName]) {
-                        result += '="' + escapeAttribute(this._attributes[attributeName]) + '"';
-                    }
+        let result = '<' + this.nodeName;
 
-                    return result;
-                }, '')
-            + '>'
-            + (voidElements.indexOf(this.nodeName) !== -1 ? '' : this.innerHTML + '</' + this.nodeName + '>');
+        for (let attr of this._attributes) {
+            result += ' ' + attr.name;
+
+            if (attr.value !== null && attr.value !== 'undefined') {
+                result += '="' + escapeAttribute(attr.value) + '"';
+            }
+        }
+
+        result += '>' + (voidElements.indexOf(this.nodeName) !== -1 ? '' : this.innerHTML + '</' + this.nodeName + '>');
+        return result;
     }
 
     get dataset() {

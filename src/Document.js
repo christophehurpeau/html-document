@@ -5,6 +5,7 @@ import DocumentFragment from './DocumentFragment';
 import HTMLElement from './HTMLElement';
 import Text from './Text';
 import Url from './utils/Url';
+import Attr from './Attr';
 
 // HTML Elements
 import HTMLDocumentElement from './HTMLElement/elements/HTMLDocumentElement';
@@ -112,6 +113,20 @@ export default class Document extends ParentNode {
         const text = new Text(textContent);
         text._ownerDocument = this;
         return text;
+    }
+
+    /**
+     * The Document.createAttribute() method creates a new attribute node, and returns it. The object created
+     * a node implementing the Attr interface. The DOM does not enforce what sort of attributes can be added to a
+     * particular element in this manner.
+     *
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Document/createAttribute
+     *
+     * @param {string} name
+     * @return {Attr}
+     */
+    createAttribute(name) {
+        return new Attr(name);
     }
 
     /**

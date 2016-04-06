@@ -61,8 +61,14 @@ test('getElementById should return null if nothing found', function () {
 
 test('create comments in document', function () {
     var document = new Document();
-    document.innerHTML = '<!-- some comment -->';
-    expect(document.firstChild.nodeName, '#comment');
+    document.body.innerHTML = '<!-- some comment -->';
+    expect(document.body.firstChild.nodeName, '#comment');
+});
+
+test('create attribute in document', function () {
+    var document = new Document();
+    var attr = document.createAttribute('some');
+    expect(attr.name, 'some');
 });
 
 test('create an element and add nodes inside', function () {
