@@ -20,7 +20,7 @@
     "coveralls": "^2.11.4",
     "proclaim": "^3.3",
     "springbokjs-library": "^11.3.0",
-    "xunit-file": "0.0.8"
+    "xunit-file": "0.0.10"
   },
   "dependencies": {
     "babel-runtime": "^5.8.29",
