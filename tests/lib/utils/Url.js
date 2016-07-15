@@ -196,6 +196,6 @@ test('searchParams member', function () {
     (0, _proclaim.deepEqual)(url.searchParams, {});
 
     url.href = 'http://some.link/some/path/on/site.html?search=me';
-    (0, _proclaim.deepEqual)(url.searchParams, { search: 'me' });
+    (0, _proclaim.strictEqual)(url.searchParams.search, 'me');
 });
 //# sourceMappingURL=Url.js.map

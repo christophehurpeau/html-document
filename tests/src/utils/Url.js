@@ -189,5 +189,5 @@ test('searchParams member', () => {
     deepEqual(url.searchParams, {});
 
     url.href = 'http://some.link/some/path/on/site.html?search=me';
-    deepEqual(url.searchParams, { search: 'me' });
+    strictEqual(url.searchParams.search, 'me');
 });
