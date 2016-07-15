@@ -298,6 +298,11 @@ export default class Url {
      */
     get searchParams() {
         let tempUrl = urlParse(this.href, true);
-        return tempUrl.query;
+        let result = {};
+        for (let key in tempUrl.query) {
+            result[key] = tempUrl.query[key];
+        }
+
+        return result;
     }
 }
