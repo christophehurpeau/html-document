@@ -182,7 +182,7 @@ export default class Document extends ParentNode {
     }
 
     get head() {
-        let head = this._documentElement.getElementsByTagName('head').shift();
+        let head = this._documentElement._childNodeFind(node => node.tagName === 'head');
         if (!head) {
             head = this.createElement('head');
             this._documentElement.insertBefore(head, this.body);
@@ -192,7 +192,7 @@ export default class Document extends ParentNode {
     }
 
     get body() {
-        let body = this._documentElement.getElementsByTagName('body').shift();
+        let body = this._documentElement._childNodeFind(node => node.tagName === 'body');
         if (!body) {
             body = this.createElement('body');
             this._documentElement.appendChild(body);
