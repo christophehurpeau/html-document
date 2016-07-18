@@ -16,13 +16,15 @@ export default class HTMLDocumentElement extends HTMLElement {
     set innerHTML(value) {
         super.innerHTML = value;
 
-        if (this.childNodes.length === 1 && this.firstChild.tagName === 'html') {
+        let htmlElement = this._childNodeFind(node => node.tagName === 'html');
+
+        if (htmlElement !== null) {
             let child;
-            while (child = this.firstChild.firstChild) {
+            while (child = htmlElement.firstChild) {
                 this.appendChild(child);
             }
 
-            this.removeChild(this.firstChild); // Remove html
+            this.removeChild(htmlElement); // Remove html
         }
     }
 

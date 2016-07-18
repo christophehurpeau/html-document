@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <a href="http://google.com/">Some external link</a>
+    <a href="/alloy">Some internal link</a>
+    <a href="/tinymce" rel="nofollow"><img src="/logo.png" alt=""/></a>
+    <a href="/tinymce">This link should be marked as Image</a>
+    <iframe src="/tinymce/inline"></iframe>
+    <a href="/tinymce/inline">This link should be marked as frame</a>
+    <form action="/ckeditor" method="post">
+        <input type="submit" value="Send"/>
+    </form>
+    <a href="/ckeditor">This link should be marked as form</a>
+    <a href="/ckeditor/inline"><img src="/logo.png" alt="This is anchor text"/></a>
+    <a href="http://yandex.ru" rel="nofollow"><img src="/logo.png" alt="This is anchor text"/><span data-code="no text content"></span></a>
+    <a href="http://www.somedomain.com/">This is duplicate link</a>
+    <a href="http://www.somedomain.com/">This is duplicate link</a>
+    <a href="http://www.somedomain.com/">This is duplicate link</a>
+    <a href="http://www.somedomain.com/">This is duplicate link</a>
+    <a href="http://www.somedomain.com/">This is duplicate link</a>
+    <form action="http://www.somedomain.com/"><input type="submit" value="Send"/></form>
+    <form action="http://www.somedomain.com/"><input type="submit" value="Send"/></form>
+    <a href="http://www.somedomain.com/"><img src="/logo.png" alt="This is duplicate link"/></a>
+    <a href="http://www.somedomain.com/"><img src="/logo.png" alt="This is duplicate link"/></a>
+    <a href="http://www.somedomain.com/"><img src="/logo.png" alt="This is duplicate link"/></a>
+    <a href="http://www.somedomain.com/"><img src="/logo.png" alt=""/></a>
+    <a href="http://www.somedomain.com/"><img src="/logo.png" alt=""/></a>
+    <a href="http://www.somedomain.com/"><img src="/logo.png" alt=""/></a>
+    <a href="http://www.semrush.com/" title="Title for empty link"></a>
+    <a href="about:blank" title="You should not see me"></a>
+    <form action="about:blank">You should not see this</form>
+    <iframe src="about:blank" title="Frame should not exists"></iframe>
+</body>
+</html>
