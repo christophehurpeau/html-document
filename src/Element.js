@@ -94,11 +94,11 @@ export default class Element extends ParentNode {
      * @readonly
      */
     get nextElementSibling() {
-        let children = this.parentNode.children;
-        if (children && children.length > 1) {
-            let index = children.indexOf(this);
-            if (index + 1 < children.length) {
-                return children[index + 1];
+        const siblings = this.parentNode.children;
+        if (siblings && siblings.length > 1) {
+            let index = siblings.indexOf(this);
+            if (index + 1 < siblings.length) {
+                return siblings[index + 1];
             }
         }
 
@@ -113,11 +113,11 @@ export default class Element extends ParentNode {
      * @readonly
      */
     get previousElementSibling() {
-        let children = this.parentNode.children;
-        if (children && children.length > 1) {
-            let index = children.indexOf(this);
+        const siblings = this.parentNode.children;
+        if (siblings && siblings.length > 1) {
+            let index = siblings.indexOf(this);
             if (index !== 0) {
-                return children[index - 1];
+                return siblings[index - 1];
             }
         }
 
