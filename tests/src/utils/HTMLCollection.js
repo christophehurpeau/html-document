@@ -1,5 +1,5 @@
 /* global test */
-import { strictEqual, deepEqual, isNull } from 'proclaim';
+import { strictEqual, isNull } from 'proclaim';
 import Document from '../../../lib/Document';
 import HTMLCollection from '../../../lib/utils/HTMLCollection';
 
