@@ -24,6 +24,16 @@ export default class HTMLCollection extends Array {
     }
 
     /**
+     * Method updates state of collection
+     *
+     * @private
+     */
+    _update() {
+        this.splice(0, this.length);
+        this._fillChildren(this._parent);
+    }
+
+    /**
      * Returns the specific node at the given zero-based index into the list. Returns null if the index
      * is out of range.
      *

@@ -1,6 +1,7 @@
 import Node from './Node';
 import parse from './parse';
 import {cloneAnyNode} from './utils/cloneNodeHelper';
+import HTMLCollection from './utils/HTMLCollection';
 
 /**
  * The ParentNode interface contains methods that are particular to Node objects that can have children.
@@ -11,6 +12,7 @@ export default class ParentNode extends Node {
     constructor() {
         super();
         this._childNodes = [];
+        this._childCollections = [];
     }
 
     /**
@@ -87,6 +89,30 @@ export default class ParentNode extends Node {
             }
         });
         return result;
+    }
+
+    /**
+     * Inner method to create new live HTMLCollection.
+     *
+     * @protected
+     */
+    _createCollection(selector) {
+        const collection = new HTMLCollection(this, selector);
+        this._childCollections.push(collection);
+        return collection;
+    }
+
+    /**
+     * Inner method to update all collections in this element and
+     * it's parent.
+     *
+     * @private
+     */
+    _updateCollections() {
+        this._childCollections.forEach(collection => collection._update());
+        if (this.parentNode !== null) {
+            this.parentNode._updateCollections();
+        }
     }
 
     /**
@@ -207,6 +233,7 @@ export default class ParentNode extends Node {
 
         child._parentNode = this;
         this._childNodes.push(child);
+        this._updateCollections();
         return child;
     }
 
@@ -242,6 +269,7 @@ export default class ParentNode extends Node {
         }
 
         delete oldChild._parentNode;
+        this._updateCollections();
         return oldChild;
     }
 
@@ -257,6 +285,7 @@ export default class ParentNode extends Node {
 
         this._childNodes.splice(index, 1);
         delete toRemoveChild._parentNode;
+        this._updateCollections();
         return toRemoveChild;
     }
 
@@ -291,6 +320,7 @@ export default class ParentNode extends Node {
             this._childNodes.splice(index, 0, child);
         }
 
+        this._updateCollections();
         return child;
     }
 
@@ -308,6 +338,7 @@ export default class ParentNode extends Node {
      */
     set innerHTML(html) {
         this._childNodes = [];
+        this._updateCollections();
         parse(html, this);
     }
 

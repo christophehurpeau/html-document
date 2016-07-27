@@ -93,3 +93,19 @@ test('getElementsByTagName returns everything if tag name not set', () => {
     let collection = document.getElementsByTagName();
     assert.equal(collection.length, 4);
 });
+
+test('getElementsByClassName returns HTMLCollection', () => {
+    const document = new Document();
+    document.body.innerHTML = '<b class="some class"></b><div><b class="some"></b></div>';
+    let somes = document.getElementsByClassName('some');
+    assert.equal(somes.length, 2);
+    let someClasses = document.getElementsByClassName('class some');
+    assert.equal(someClasses.length, 1);
+});
+
+test('getElementsByClassName returns live HTMLCollection', () => {
+    const document = new Document();
+    let somes = document.getElementsByClassName('some');
+    document.body.innerHTML = '<b class="some class"></b><div><b class="some"></b></div>';
+    assert.equal(somes.length, 2);
+});

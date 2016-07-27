@@ -98,4 +98,20 @@ test('getElementsByTagName returns everything if tag name not set', function () 
     var collection = document.getElementsByTagName();
     _proclaim2['default'].equal(collection.length, 4);
 });
+
+test('getElementsByClassName returns HTMLCollection', function () {
+    var document = new Document();
+    document.body.innerHTML = '<b class="some class"></b><div><b class="some"></b></div>';
+    var somes = document.getElementsByClassName('some');
+    _proclaim2['default'].equal(somes.length, 2);
+    var someClasses = document.getElementsByClassName('class some');
+    _proclaim2['default'].equal(someClasses.length, 1);
+});
+
+test('getElementsByClassName returns live HTMLCollection', function () {
+    var document = new Document();
+    var somes = document.getElementsByClassName('some');
+    document.body.innerHTML = '<b class="some class"></b><div><b class="some"></b></div>';
+    _proclaim2['default'].equal(somes.length, 2);
+});
 //# sourceMappingURL=Element.js.map

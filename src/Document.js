@@ -133,12 +133,12 @@ export default class Document extends ParentNode {
      * @param {string} tagName
      * @return {HTMLCollection}
      */
-    getElementsByTagName(tagName, _array) {
-        return this.documentElement.getElementsByTagName(tagName, _array);
+    getElementsByTagName(tagName) {
+        return this.documentElement.getElementsByTagName(tagName);
     }
 
     getElementsByClassName(className) {
-        throw new Error('Not implemented');
+        return this.documentElement.getElementsByClassName(className);
     }
 
     /**

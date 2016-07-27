@@ -39,4 +39,13 @@ test('HTMLCollection.item returns null on index out of bounds', function () {
     });
     (0, _proclaim.isNull)(collection.item(20));
 });
+
+test('HTMLCollection should return live collection', function () {
+    var document = new _libDocument2['default']();
+    var divCollection = document.body.getElementsByTagName('div');
+    document.body.appendChild(document.createElement('div'));
+    (0, _proclaim.strictEqual)(divCollection.length, 1);
+    document.body.innerHTML = '';
+    (0, _proclaim.strictEqual)(divCollection.length, 0);
+});
 //# sourceMappingURL=HTMLCollection.js.map
