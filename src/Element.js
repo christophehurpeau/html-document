@@ -1,7 +1,6 @@
 import Node from './Node';
 import ParentNode from './ParentNode';
 import { querySelector as _querySelector, querySelectorAll as _querySelectorAll } from './utils/querySelectorHelper';
-import HTMLCollection from './utils/HTMLCollection';
 
 /**
  * The Element interface represents an object within a DOM document.
