@@ -35,21 +35,3 @@ test:
 #echo "\n> Run browser tests"
 #sudo start xvfb
 #karma start karma.conf.js --single-run --browsers=Firefox,Chrome,PhantomJS || exit 1
-
-deployment:
-  docs:
-    branch: master
-    commands:
-      - git config user.email "builds@circleci.com"
-      - git config user.name "CircleCi"
-      - mv coverage coverage-tmp
-      - mv docs docs-tmp
-      - git fetch
-      - git checkout -f gh-pages
-      - rm -Rf docs coverage
-      - mv docs-tmp docs
-      - mv coverage-tmp coverage
-      - date > date.txt
-      - git add -f docs coverage
-      - git commit -m"auto commit from circleci"
-      - git push -f origin gh-pages
