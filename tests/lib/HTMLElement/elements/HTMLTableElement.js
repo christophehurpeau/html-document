@@ -6,6 +6,7 @@ var _proclaim = require('proclaim');
 var lib = '../../../../lib/';
 
 var HTMLTableElement = require(lib + 'HTMLElement/elements/HTMLTableElement');
+var HTMLTableSection = require(lib + 'HTMLElement/elements/HTMLTableSectionElement');
 var Document = require(lib + 'Document');
 var DOMException = require(lib + 'DOMException');
 
@@ -104,8 +105,24 @@ test('HTMLTableElement set tHead', function () {
     var document = new Document();
     document.body.innerHTML = '<table><caption>Some caption</caption><tbody>' + '<tr><td>Some cell</td></tr></tbody></table>';
     var table = document.body.firstChild;
-    var tHead = document.createElement('thead');
-    table.tHead = tHead;
+    table.tHead = document.createElement('thead');
     (0, _proclaim.strictEqual)(table.outerHTML, '<table><caption>Some caption</caption><thead></thead>' + '<tbody><tr><td>Some cell</td></tr></tbody></table>');
+});
+
+test('HTMLTableElement should create HTMLTableSection for tbody tag', function () {
+    var document = new Document();
+    document.body.innerHTML = '<table><tbody><tr><td>Some cell</td></tr></tbody></table>';
+    var table = document.body.firstChild;
+    var tBody = table.tBodies[0];
+    (0, _proclaim.isInstanceOf)(tBody, HTMLTableSection);
+});
+
+test('HTMLTableElement should return arrays for rows and cells', function () {
+    var document = new Document();
+    document.body.innerHTML = '<table><tbody>' + '<tr><td>Some cell</td><td>Some cell</td></tr>' + '<tr><td>Some cell</td><td>Some cell</td></tr></tbody></table>';
+    var table = document.body.firstChild;
+    var tBody = table.tBodies[0];
+    (0, _proclaim.strictEqual)(tBody.rows.length, 2);
+    (0, _proclaim.strictEqual)(tBody.rows[1].cells.length, 2);
 });
 //# sourceMappingURL=HTMLTableElement.js.map

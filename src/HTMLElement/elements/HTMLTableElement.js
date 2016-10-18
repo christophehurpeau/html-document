@@ -136,7 +136,7 @@ export default class HTMLTableElement extends HTMLElement {
      * @readonly
      */
     get rows() {
-        let result = [];
+        const result = [];
         if (this.tHead !== null) {
             this.tHead.children.forEach((element) => {
                 if (element.tagName === 'tr') {

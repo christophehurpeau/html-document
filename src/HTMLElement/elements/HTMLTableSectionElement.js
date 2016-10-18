@@ -37,7 +37,7 @@ export default class HTMLTableSectionElement extends HTMLElement {
      * @type {Element[]}
      */
     get rows() {
-        return this._childNodeFind(child => child.tagName === 'tr');
+        return this.children.filter(element => element.tagName === 'tr');
     }
 
     /**

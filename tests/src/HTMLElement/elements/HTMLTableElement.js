@@ -1,9 +1,10 @@
 /* global test */
-import { strictEqual, isNull, throws } from 'proclaim';
+import { strictEqual, isNull, throws, isInstanceOf } from 'proclaim';
 
 const lib = '../../../../lib/';
 
 const HTMLTableElement = require(lib + 'HTMLElement/elements/HTMLTableElement');
+const HTMLTableSection = require(lib + 'HTMLElement/elements/HTMLTableSectionElement');
 const Document = require(lib + 'Document');
 const DOMException = require(lib + 'DOMException');
 
@@ -97,12 +98,30 @@ test('HTMLTableElement throw when setting wrong caption', () => {
 });
 
 test('HTMLTableElement set tHead', () => {
-    let document = new Document();
+    const document = new Document();
     document.body.innerHTML = '<table><caption>Some caption</caption><tbody>' +
         '<tr><td>Some cell</td></tr></tbody></table>';
-    let table = document.body.firstChild;
-    let tHead = document.createElement('thead');
-    table.tHead = tHead;
+    const table = document.body.firstChild;
+    table.tHead = document.createElement('thead');
     strictEqual(table.outerHTML, '<table><caption>Some caption</caption><thead></thead>' +
         '<tbody><tr><td>Some cell</td></tr></tbody></table>');
+});
+
+test('HTMLTableElement should create HTMLTableSection for tbody tag', () => {
+    const document = new Document();
+    document.body.innerHTML = '<table><tbody><tr><td>Some cell</td></tr></tbody></table>';
+    const table = document.body.firstChild;
+    const tBody = table.tBodies[0];
+    isInstanceOf(tBody, HTMLTableSection);
+});
+
+test('HTMLTableElement should return arrays for rows and cells', () => {
+    const document = new Document();
+    document.body.innerHTML = '<table><tbody>' +
+        '<tr><td>Some cell</td><td>Some cell</td></tr>' +
+        '<tr><td>Some cell</td><td>Some cell</td></tr></tbody></table>';
+    const table = document.body.firstChild;
+    const tBody = table.tBodies[0];
+    strictEqual(tBody.rows.length, 2);
+    strictEqual(tBody.rows[1].cells.length, 2);
 });

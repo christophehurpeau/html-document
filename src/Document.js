@@ -25,7 +25,7 @@ const elementClasses = new Map([
     ['table', HTMLTableElement],
     ['thead', HTMLTableSectionElement],
     ['tfoot', HTMLTableSectionElement],
-    ['tfoot', HTMLTableSectionElement],
+    ['tbody', HTMLTableSectionElement],
     ['tr', HTMLTableRowElement],
     ['select', HTMLSelectElement],
     ['a', HTMLAnchorElement],

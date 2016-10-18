@@ -13,7 +13,7 @@ export default class HTMLTableRowElement extends HTMLElement {
      * @type {Element[]} HTMLTableRowElement#cells
      */
     get cells() {
-        return this._childNodeFind(child => child.tagName === 'td');
+        return this.children.filter(element => element.tagName === 'td');
     }
 
     /**
