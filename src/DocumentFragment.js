@@ -11,9 +11,9 @@ export default class DocumentFragment extends ParentNode {
     /**
      * @inheritdoc
      */
-    get outerHTML() {
-        return this.innerHTML;
-    }
+  get outerHTML() {
+    return this.innerHTML;
+  }
 }
 
 /**

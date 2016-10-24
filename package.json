@@ -1,5 +1,6 @@
 {
   "name": "html-document",
+  "version": "0.8.1",
   "description": "Partial implementation of the DOM, document for node.",
   "keywords": [
     "DOM",
@@ -10,31 +11,52 @@
     "parser",
     "springbokjs"
   ],
-  "version": "0.8.1",
-  "repository": "christophehurpeau/html-document",
-  "homepage": "https://christophehurpeau.github.io/html-document/docs/",
-  "license": "MIT",
   "author": "Christophe Hurpeau <christophe@hurpeau.com> (http://christophe.hurpeau.com/)",
+  "license": "ISC",
+  "repository": "git@github.com:html-document/html-document.git",
+  "homepage": "https://christophehurpeau.github.io/html-document/docs/",
   "main": "./lib/Document.js",
-  "devDependencies": {
-    "coveralls": "^2.11.4",
-    "proclaim": "^3.3",
-    "springbokjs-library": "^11.3.0",
-    "xunit-file": "0.0.11"
+  "scripts": {
+    "build": "pob-build",
+    "clean": "rm -Rf docs dist test/node6 coverage",
+    "generate:api": "rm -Rf docs/ ; mkdir docs/ ; pob-build doc ; jsdoc README.md lib-doc --recurse --destination docs/ --configure jsdoc.conf.json ; rm -Rf lib-doc",
+    "generate:docs": "npm run generate:api && npm run generate:test-coverage",
+    "generate:test-coverage": "rm -Rf coverage/ ; NODE_ENV=production node --harmony --es_staging node_modules/istanbul/lib/cli.js cover node_modules/.bin/_mocha -- --recursive --reporter=spec -u tdd test/node6",
+    "lint": "eslint --ext .js,.jsx --fix src/ test/src/",
+    "prepare": "ln -s ../../git-hooks/pre-commit .git/hooks/pre-commit 2>/dev/null || true ; ln -s ../../git-hooks/post-checkout .git/hooks/post-checkout 2>/dev/null || true ; ln -s ../../git-hooks/post-merge .git/hooks/post-merge 2>/dev/null || true ; ln -s ../../git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg 2>/dev/null || true",
+    "prepublish": "ln -s ../../git-hooks/pre-commit .git/hooks/pre-commit 2>/dev/null || true ; ln -s ../../git-hooks/post-checkout .git/hooks/post-checkout 2>/dev/null || true ; ln -s ../../git-hooks/post-merge .git/hooks/post-merge 2>/dev/null || true ; ln -s ../../git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg 2>/dev/null || true",
+    "preversion": "npm run lint && npm run build && pob-repository-check-clean",
+    "release": "pob-repository-check-clean && pob-release",
+    "test": "mocha --require source-map-support/register --recursive --bail -u tdd test/node6",
+    "version": "pob-version",
+    "watch": "pob-watch"
   },
   "dependencies": {
-    "babel-runtime": "^5.8.29",
-    "css-selector-parser": "^1.1.0",
-    "htmlparser2": "^3.8.3"
+    "css-selector-parser": "^1.2.0",
+    "htmlparser2": "^3.9.2"
   },
-  "scripts": {
-    "preversion": "make pre-version",
-    "version": "make version",
-    "prepublish": "make pre-publish",
-    "postpublish": "make post-publish",
-    "test": "make tests",
-    "build": "make build",
-    "watch": "make watch",
-    "lint": "make lint"
+  "devDependencies": {
+    "babel-eslint": "^7.0.0",
+    "babel-plugin-add-jsdoc-annotations": "^5.1.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-es2015-node6": "^0.3.0",
+    "babel-preset-jsdoc": "^0.4.0",
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-config-pob": "^7.6.0",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-import": "^2.0.1",
+    "istanbul": "^0.4.5",
+    "jsdoc": "^3.4.2",
+    "komet": "^0.1.3",
+    "komet-karma": "^0.2.3",
+    "minami": "^1.1.1",
+    "mocha": "^3.1.2",
+    "pob-babel": "^12.2.0",
+    "pob-release": "^2.2.2",
+    "proclaim": "^3.4",
+    "source-map-support": "^0.4.5",
+    "tcomb-forked": "^3.4.0",
+    "xunit-file": "^1.0.0"
   }
 }

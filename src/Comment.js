@@ -8,40 +8,40 @@ export default class Comment extends Node {
     /**
      * @param {string} comment
      */
-    constructor(comment) {
-        super();
-        this._value = comment;
-    }
+  constructor(comment) {
+    super();
+    this._value = comment;
+  }
 
     /**
      * @inheritdoc
      */
-    get innerHTML() {
-        return '';
-    }
+  get innerHTML() {
+    return '';
+  }
 
     /**
      * @inheritdoc
      */
-    get outerHTML() {
-        return '<!--' + escapeHTML(this._value) + '-->';
-    }
+  get outerHTML() {
+    return `<!--${escapeHTML(this._value)}-->`;
+  }
 
     /**
      * Comment's value
      *
      * @type {string}
      */
-    get data() {
-        return this._value;
-    }
+  get data() {
+    return this._value;
+  }
 
     /**
      * @param {string} data
      */
-    set data(data) {
-        this._value = data;
-    }
+  set data(data) {
+    this._value = data;
+  }
 }
 
 /**

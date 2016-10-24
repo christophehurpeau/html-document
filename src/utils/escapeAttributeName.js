@@ -5,8 +5,8 @@
  * @returns {string}
  */
 export function attributeNameToProperty(name) {
-    let result = name.replace(/^data-/i, '');
-    return result.replace(/-(\w)/g, (match, letter) => letter.toUpperCase());
+  let result = name.replace(/^data-/i, '');
+  return result.replace(/-(\w)/g, (match, letter) => letter.toUpperCase());
 }
 
 /**
@@ -16,6 +16,6 @@ export function attributeNameToProperty(name) {
  * @returns {string}
  */
 export function propertyNameToAttribute(name) {
-    let result = name.replace(/([A-Z])/g, (match, letter) => '-' + letter.toLowerCase());
-    return 'data-' + result;
+  let result = name.replace(/([A-Z])/g, (match, letter) => `-${letter.toLowerCase()}`);
+  return `data-${result}`;
 }

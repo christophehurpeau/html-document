@@ -5,9 +5,9 @@
  * @see https://developer.mozilla.org/en/docs/Web/API/Node
  */
 export default class Node {
-    constructor() {
-        this._attributes = {};
-    }
+  constructor() {
+    this._attributes = {};
+  }
 
     /**
      * Returns the Document that this node belongs to.
@@ -16,9 +16,9 @@ export default class Node {
      * @type {Document}
      * @readonly
      */
-    get ownerDocument() {
-        return this._ownerDocument || null;
-    }
+  get ownerDocument() {
+    return this._ownerDocument || null;
+  }
 
     /* ATTRIBUTES */
 
@@ -28,9 +28,9 @@ export default class Node {
      * @param {string} attributeName
      * @return {string}
      */
-    getAttribute(attributeName) {
-        return attributeName in this._attributes ? this._attributes[attributeName] : null;
-    }
+  getAttribute(attributeName) {
+    return attributeName in this._attributes ? this._attributes[attributeName] : null;
+  }
 
     /**
      * checks if attribute exists for node
@@ -39,9 +39,9 @@ export default class Node {
      * @param {string} attributeName
      * @return {boolean}
      */
-    hasAttribute(attributeName) {
-        return attributeName in this._attributes;
-    }
+  hasAttribute(attributeName) {
+    return attributeName in this._attributes;
+  }
 
     /**
      * set attribute's value
@@ -50,10 +50,10 @@ export default class Node {
      * @param {string} attributeName
      * @param {string} attributeValue
      */
-    setAttribute(attributeName, attributeValue) {
-        this._setAttribute(attributeName, attributeValue);
-        this._updatedAttribute(attributeName, this._attributes[attributeName]);
-    }
+  setAttribute(attributeName, attributeValue) {
+    this._setAttribute(attributeName, attributeValue);
+    this._updatedAttribute(attributeName, this._attributes[attributeName]);
+  }
 
     /**
      * set attribute's value
@@ -62,42 +62,42 @@ export default class Node {
      * @param {string} attributeName
      * @param {string} attributeValue
      */
-    _setAttribute(attributeName, attributeValue) {
-        this._attributes[attributeName] = String(attributeValue);
-    }
+  _setAttribute(attributeName, attributeValue) {
+    this._attributes[attributeName] = String(attributeValue);
+  }
 
     /**
      * remove attribute
      *
      * @param {string} attributeName
      */
-    removeAttribute(attributeName) {
-        if (this._attributes[attributeName] !== undefined) {
-            delete this._attributes[attributeName];
-            this._updatedAttribute(attributeName);
-        }
+  removeAttribute(attributeName) {
+    if (this._attributes[attributeName] !== undefined) {
+      delete this._attributes[attributeName];
+      this._updatedAttribute(attributeName);
     }
+  }
 
     /**
      * @internal
      * @param {string} attributeName
      * @param {string} [value]
      */
-    _updatedAttribute(attributeName, value) {
-    }
+  _updatedAttribute(attributeName, value) {
+  }
 
     /* CONTENT */
 
     /**
      * @type {string}
      */
-    get textContent() {
-        return '';
-    }
+  get textContent() {
+    return '';
+  }
 
-    _toHTML() {
-        return this.outerHTML;
-    }
+  _toHTML() {
+    return this.outerHTML;
+  }
 
     /* EVENTS */
 
@@ -106,106 +106,106 @@ export default class Node {
      * @param {function} listener
      * @param {boolean} capturingPhase
      */
-    addEventListener(eventType, listener, capturingPhase) {
-        eventType = eventType.toLowerCase();
-        const _eventsKey = capturingPhase ? '_eventsCapturingPhase' : '_eventsBubblingPhase';
-        if (!this[_eventsKey]) {
-            this[_eventsKey] = new Map();
-        }
-
-        let callbacks;
-        if (!this[_eventsKey].has(eventType)) {
-            this[_eventsKey].set(eventType, callbacks = []);
-        } else {
-            callbacks = this[_eventsKey].get(eventType);
-        }
-
-        callbacks.push(listener);
-        return this;
+  addEventListener(eventType, listener, capturingPhase) {
+    eventType = eventType.toLowerCase();
+    const _eventsKey = capturingPhase ? '_eventsCapturingPhase' : '_eventsBubblingPhase';
+    if (!this[_eventsKey]) {
+      this[_eventsKey] = new Map();
     }
+
+    let callbacks;
+    if (!this[_eventsKey].has(eventType)) {
+      this[_eventsKey].set(eventType, callbacks = []);
+    } else {
+      callbacks = this[_eventsKey].get(eventType);
+    }
+
+    callbacks.push(listener);
+    return this;
+  }
 
     /**
      * @param {string} eventType
      * @param {function} listener
      * @param {boolean} capturingPhase
      */
-    removeEventListener(eventType, listener, capturingPhase) {
-        eventType = eventType.toLowerCase();
-        const _eventsKey = capturingPhase ? '_eventsCapturingPhase' : '_eventsBubblingPhase';
-        if (this[_eventsKey] && this[_eventsKey].has(eventType)) {
-            let callbacks = this[_eventsKey].get(eventType);
-            let index = callbacks.indexOf(listener);
-            if (index === -1) {
-                return false;
-            }
+  removeEventListener(eventType, listener, capturingPhase) {
+    eventType = eventType.toLowerCase();
+    const _eventsKey = capturingPhase ? '_eventsCapturingPhase' : '_eventsBubblingPhase';
+    if (this[_eventsKey] && this[_eventsKey].has(eventType)) {
+      let callbacks = this[_eventsKey].get(eventType);
+      let index = callbacks.indexOf(listener);
+      if (index === -1) {
+        return false;
+      }
 
-            callbacks.splice(index, 1);
-        }
+      callbacks.splice(index, 1);
     }
+  }
 
     /**
      * @param {Event} event
      * @return {boolean}
      */
-    dispatchEvent(event) {
-        event.target = this;
+  dispatchEvent(event) {
+    event.target = this;
 
         // Capturing phase
-        const capturingPhase = function (event) { // eslint-disable-line space-before-function-paren
-            if (this._parentNode) {
-                capturingPhase.call(this._parentNode, event);
-            }
+    const capturingPhase = function (event) { // eslint-disable-line space-before-function-paren
+      if (this._parentNode) {
+        capturingPhase.call(this._parentNode, event);
+      }
 
-            if (event.propagationStopped) {
-                return;
-            }
+      if (event.propagationStopped) {
+        return;
+      }
 
-            const callbacks = this._eventsCapturingPhase && this._eventsCapturingPhase.get(event.type);
-            if (callbacks) {
-                callbacks.some(function (callback) { // eslint-disable-line space-before-function-paren
-                    callback(event);
-                    return event.immediatePropagationStopped;
-                });
-            }
-        };
+      const callbacks = this._eventsCapturingPhase && this._eventsCapturingPhase.get(event.type);
+      if (callbacks) {
+        callbacks.some((callback) => { // eslint-disable-line space-before-function-paren
+          callback(event);
+          return event.immediatePropagationStopped;
+        });
+      }
+    };
 
-        capturingPhase.call(this, event);
+    capturingPhase.call(this, event);
 
         // Bubbling phase
-        if (!event.propagationStopped) {
-            const bubblingPhase = function (event) { // eslint-disable-line space-before-function-paren
-                const callbacks = this._eventsBubblingPhase && this._eventsBubblingPhase.get(event.type);
-                if (callbacks) {
-                    callbacks.some(function (callback) { // eslint-disable-line space-before-function-paren
-                        callback(event);
-                        return event.immediatePropagationStopped;
-                    });
-                }
-
-                if (!event.propagationStopped && this._parentNode) {
-                    bubblingPhase.call(this._parentNode, event);
-                }
-            };
-
-            bubblingPhase.call(this, event);
+    if (!event.propagationStopped) {
+      const bubblingPhase = function (event) { // eslint-disable-line space-before-function-paren
+        const callbacks = this._eventsBubblingPhase && this._eventsBubblingPhase.get(event.type);
+        if (callbacks) {
+          callbacks.some((callback) => { // eslint-disable-line space-before-function-paren
+            callback(event);
+            return event.immediatePropagationStopped;
+          });
         }
 
-        return !event.defaultPrevented;
+        if (!event.propagationStopped && this._parentNode) {
+          bubblingPhase.call(this._parentNode, event);
+        }
+      };
+
+      bubblingPhase.call(this, event);
     }
+
+    return !event.defaultPrevented;
+  }
 
     /**
      * @property Node#nodeValue
      * @returns {string|null}
      */
-    get nodeValue() {
-        return null;
-    }
+  get nodeValue() {
+    return null;
+  }
 
     /**
      * @param {*} value
      */
-    set nodeValue(value) {
-    }
+  set nodeValue(value) {
+  }
 }
 
 /**

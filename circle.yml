@@ -17,22 +17,14 @@ test:
   pre:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
   override:
-    - node_modules/.bin/jscs -c .jscsrc src/ tests/src/
-    - node_modules/.bin/eslint -c .eslintrc src/ tests/src/
-    - make build
-    - XUNIT_FILE=$CIRCLE_TEST_REPORTS/junit/xunit.xml node_modules/.bin/mocha --harmony --recursive --reporter xunit-file -u tdd tests/lib
-    - make docs
+    - npm run preversion
+    - npm run test
+    - XUNIT_FILE=$CIRCLE_TEST_REPORTS/junit/xunit.xml node_modules/.bin/mocha --harmony --recursive --reporter xunit-file -u tdd test/node6
+    - npm run generate:docs
   post:
+    - bash <(curl -s https://codecov.io/bash)
     - cp -R coverage $CIRCLE_ARTIFACTS/
     - cp -R docs $CIRCLE_ARTIFACTS/
-    - bash <(curl -s https://codecov.io/bash)
-
-#echo "\n> Prepare tests for browsers"
-#node_modules/.bin/gulp springbokjs-shim || exit 1
-
-#echo "\n> Run browser tests"
-#sudo start xvfb
-#karma start karma.conf.js --single-run --browsers=Firefox,Chrome,PhantomJS || exit 1
 
 deployment:
   docs:

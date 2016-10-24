@@ -30,16 +30,16 @@ export default class Element extends ParentNode {
      *
      * @type {string}
      */
-    get id() {
-        return this.getAttribute('id');
-    }
+  get id() {
+    return this.getAttribute('id');
+  }
 
     /**
      * @param {string} id
      */
-    set id(id) {
-        this.setAttribute('id', id);
-    }
+  set id(id) {
+    this.setAttribute('id', id);
+  }
 
     /**
      * The tag name of the element.
@@ -47,9 +47,9 @@ export default class Element extends ParentNode {
      * @type {string}
      * @readonly
      */
-    get tagName() {
-        return this.nodeName;
-    }
+  get tagName() {
+    return this.nodeName;
+  }
 
     /**
      * Returns a live {@link HTMLCollection} containing all objects of type {@link Element}
@@ -62,9 +62,9 @@ export default class Element extends ParentNode {
      * @type {Element[]}
      * @readonly
      */
-    get children() {
-        return this._childNodes.filter(node => node instanceof Element);
-    }
+  get children() {
+    return this._childNodes.filter(node => node instanceof Element);
+  }
 
     /**
      * Returns the {@link Element} that is the first child of this ParentNode, or null if there is none.
@@ -72,9 +72,9 @@ export default class Element extends ParentNode {
      * @type {Element}
      * @readonly
      */
-    get firstElementChild() {
-        return this._childNodes[0] || null;
-    }
+  get firstElementChild() {
+    return this._childNodes[0] || null;
+  }
 
     /**
      * Returns the {@link Element} that is the first child of this ParentNode, or null if there is none.
@@ -82,9 +82,9 @@ export default class Element extends ParentNode {
      * @type {Element}
      * @readonly
      */
-    get lastElementChild() {
-        return this._childNodes.length === 0 ? null : this._childNodes[this._childNodes.length - 1];
-    }
+  get lastElementChild() {
+    return this._childNodes.length === 0 ? null : this._childNodes[this._childNodes.length - 1];
+  }
 
     /**
      * Returns the {@link Element} immediately following the specified one in its parent's children list,
@@ -93,17 +93,17 @@ export default class Element extends ParentNode {
      * @type {Element}
      * @readonly
      */
-    get nextElementSibling() {
-        const siblings = this.parentNode.children;
-        if (siblings && siblings.length > 1) {
-            let index = siblings.indexOf(this);
-            if (index + 1 < siblings.length) {
-                return siblings[index + 1];
-            }
-        }
-
-        return null;
+  get nextElementSibling() {
+    const siblings = this.parentNode.children;
+    if (siblings && siblings.length > 1) {
+      let index = siblings.indexOf(this);
+      if (index + 1 < siblings.length) {
+        return siblings[index + 1];
+      }
     }
+
+    return null;
+  }
 
     /**
      * Returns the Element immediately prior to the specified one in its parent's children list, or null
@@ -112,17 +112,17 @@ export default class Element extends ParentNode {
      * @type {Element}
      * @readonly
      */
-    get previousElementSibling() {
-        const siblings = this.parentNode.children;
-        if (siblings && siblings.length > 1) {
-            let index = siblings.indexOf(this);
-            if (index !== 0) {
-                return siblings[index - 1];
-            }
-        }
-
-        return null;
+  get previousElementSibling() {
+    const siblings = this.parentNode.children;
+    if (siblings && siblings.length > 1) {
+      let index = siblings.indexOf(this);
+      if (index !== 0) {
+        return siblings[index - 1];
+      }
     }
+
+    return null;
+  }
 
     /**
      * Returns an unsigned long giving the amount of children that the object has.
@@ -130,9 +130,9 @@ export default class Element extends ParentNode {
      * @type {number}
      * @readonly
      */
-    get childElementCount() {
-        return this._childNodes.length;
-    }
+  get childElementCount() {
+    return this._childNodes.length;
+  }
 
     /**
      * Returns a reference to the element by its ID.
@@ -140,9 +140,9 @@ export default class Element extends ParentNode {
      * @param {string} id case-sensitive string representing the unique ID of the element being sought
      * @return {Element} reference to an Element, or null if an element with the specified ID is not in the document.
      */
-    getElementById(id) {
-        return this._childNodesRecursiveFind(node => node instanceof Element && node.getAttribute('id') === id) || null;
-    }
+  getElementById(id) {
+    return this._childNodesRecursiveFind(node => node instanceof Element && node.getAttribute('id') === id) || null;
+  }
 
     /**
      * Returns an HTMLCollection of elements with the given tag name.
@@ -153,14 +153,14 @@ export default class Element extends ParentNode {
      * @param {string} tagName
      * @return {HTMLCollection}
      */
-    getElementsByTagName(tagName) {
-        if (!tagName) {
-            return this._createCollection(child => true);
-        }
-
-        tagName = tagName.toLowerCase();
-        return this._createCollection(child => child.nodeName.toLowerCase() === tagName);
+  getElementsByTagName(tagName) {
+    if (!tagName) {
+      return this._createCollection(child => true);
     }
+
+    tagName = tagName.toLowerCase();
+    return this._createCollection(child => child.nodeName.toLowerCase() === tagName);
+  }
 
     /**
      * The Element.getElementsByClassName() method returns a live HTMLCollection containing all child
@@ -171,10 +171,10 @@ export default class Element extends ParentNode {
      *                class names are separated by whitespace
      * @return {HTMLCollection}
      */
-    getElementsByClassName(names) {
-        const classes = names.split(' ');
-        return this._createCollection(child => classes.every(token => child.classList.contains(token)));
-    }
+  getElementsByClassName(names) {
+    const classes = names.split(' ');
+    return this._createCollection(child => classes.every(token => child.classList.contains(token)));
+  }
 
     /**
      * Returns the first element that is a descendant of the element on which it is invoked that matches the
@@ -183,9 +183,9 @@ export default class Element extends ParentNode {
      * @param {string} query CSS query for selecting element
      * @return {Element|null}
      */
-    querySelector(query) {
-        return _querySelector(this, query);
-    }
+  querySelector(query) {
+    return _querySelector(this, query);
+  }
 
     /**
      * Returns a non-live NodeList of all elements descended from the element on which it is invoked that match the
@@ -194,13 +194,13 @@ export default class Element extends ParentNode {
      * @param {string} query
      * @return {Element[]}
      */
-    querySelectorAll(query) {
-        return _querySelectorAll(this, query);
-    }
+  querySelectorAll(query) {
+    return _querySelectorAll(this, query);
+  }
 
-    get attributes() {
-        return this._attributes;
-    }
+  get attributes() {
+    return this._attributes;
+  }
 }
 
 /**

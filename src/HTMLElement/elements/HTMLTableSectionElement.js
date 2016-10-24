@@ -14,20 +14,20 @@ export default class HTMLTableSectionElement extends HTMLElement {
      * @type {string}
      * @deprecated
      */
-    get align() {
-        return this.getAttribute('align');
-    }
+  get align() {
+    return this.getAttribute('align');
+  }
 
     /**
      * Set align of element
      *
      * @param {string} value
      */
-    set align(value) {
-        if (['left', 'right', 'center'].indexOf(value) !== -1) {
-            this.setAttribute('align', value);
-        }
+  set align(value) {
+    if (['left', 'right', 'center'].indexOf(value) !== -1) {
+      this.setAttribute('align', value);
     }
+  }
 
     /**
      * Returns a live HTMLCollection containing the rows in the section. The HTMLCollection is live and is automatically
@@ -36,9 +36,9 @@ export default class HTMLTableSectionElement extends HTMLElement {
      * @todo Update array to HTMLCollection when it's implemented
      * @type {Element[]}
      */
-    get rows() {
-        return this._childNodeFind(child => child.tagName === 'tr');
-    }
+  get rows() {
+    return this._childNodeFind(child => child.tagName === 'tr');
+  }
 
     /**
      * Is a DOMString containing one single chararcter. This character is the one to align all the cell of a column on.
@@ -48,9 +48,9 @@ export default class HTMLTableSectionElement extends HTMLElement {
      * @type {string}
      * @deprecated
      */
-    get ch() {
-        return '.';
-    }
+  get ch() {
+    return '.';
+  }
 
     /**
      * Is a DOMString containing a integer indicating how many characters must be left at the right (for left-to-right
@@ -59,9 +59,9 @@ export default class HTMLTableSectionElement extends HTMLElement {
      *
      * @type {number}
      */
-    get chOff() {
-        return 0;
-    }
+  get chOff() {
+    return 0;
+  }
 
     /**
      * Is a DOMString representing an enumerated value indicating how the content of the cell must be vertically
@@ -71,9 +71,9 @@ export default class HTMLTableSectionElement extends HTMLElement {
      * @type {string}
      * @deprecated
      */
-    get vAlign() {
-        return this.getAttribute('valign');
-    }
+  get vAlign() {
+    return this.getAttribute('valign');
+  }
 
     /**
      * Set align of element
@@ -81,11 +81,11 @@ export default class HTMLTableSectionElement extends HTMLElement {
      * @param {string} value
      * @ignore
      */
-    set vAlign(value) {
-        if (['top', 'middle', 'bottom', 'baseline'].indexOf(value) !== -1) {
-            this.setAttribute('valign', value);
-        }
+  set vAlign(value) {
+    if (['top', 'middle', 'bottom', 'baseline'].indexOf(value) !== -1) {
+      this.setAttribute('valign', value);
     }
+  }
 
     /**
      * Method creates new &lt;tr&gt; element and adds it to section.
@@ -93,18 +93,18 @@ export default class HTMLTableSectionElement extends HTMLElement {
      * @param {number} index
      * @return {HTMLElement}
      */
-    insertRow(index = -1) {
-        let row = this.ownerDocument.createElement('tr');
-        if (index === -1 || index === this.children.length) {
-            this.appendChild(row);
-        } else if (index < this.children.length - 1) {
-            this.insertBefore(row, this.children[index]);
-        } else {
-            throw new DOMException('IndexSizeError');
-        }
-
-        return row;
+  insertRow(index = -1) {
+    let row = this.ownerDocument.createElement('tr');
+    if (index === -1 || index === this.children.length) {
+      this.appendChild(row);
+    } else if (index < this.children.length - 1) {
+      this.insertBefore(row, this.children[index]);
+    } else {
+      throw new DOMException('IndexSizeError');
     }
+
+    return row;
+  }
 
     /**
      * Removes the row at the given position in the section. If the given position is greater (or equal as it starts
@@ -113,11 +113,11 @@ export default class HTMLTableSectionElement extends HTMLElement {
      *
      * @param {number} index
      */
-    deleteRow(index) {
-        if (index >= this.children.length || index < 0) {
-            throw new DOMException('IndexSizeError');
-        }
-
-        this.removeChild(this.children[index]);
+  deleteRow(index) {
+    if (index >= this.children.length || index < 0) {
+      throw new DOMException('IndexSizeError');
     }
+
+    this.removeChild(this.children[index]);
+  }
 }

@@ -1,15 +1,18 @@
-/dist
-/example
+/git-hooks
 /examples
 /samples
+/docs
 /coverage
 /build
+/test
+/.pob.json
 circle.yml
 .codeclimate.yml
+jsdoc.config.json
 
 /.settings
-.project
-.idea
+/.project
+/.idea
 *.sublime-project
 *.sublime-workspace
 
@@ -21,6 +24,3 @@ circle.yml
 *.old
 *~
 .#*
-.*.swp
-.DS_Store
-,*

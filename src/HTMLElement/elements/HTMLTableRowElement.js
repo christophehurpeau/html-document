@@ -1,9 +1,9 @@
 import HTMLElement from '../../HTMLElement';
 
 export default class HTMLTableRowElement extends HTMLElement {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
     /**
      * Returns a live HTMLCollection containing the cells in the row. The HTMLCollection is live and is automatically
@@ -12,9 +12,9 @@ export default class HTMLTableRowElement extends HTMLElement {
      * @todo Update array to HTMLCollection when it's implemented
      * @type {Element[]} HTMLTableRowElement#cells
      */
-    get cells() {
-        return this._childNodeFind(child => child.tagName === 'td');
-    }
+  get cells() {
+    return this._childNodeFind(child => child.tagName === 'td');
+  }
 
     /**
      * Is a DOMString containing one single character. This character is the one to align all the cell of a column on.
@@ -24,9 +24,9 @@ export default class HTMLTableRowElement extends HTMLElement {
      * @type {string}
      * @deprecated
      */
-    get ch() {
-        return '.';
-    }
+  get ch() {
+    return '.';
+  }
 
     /**
      * Is a DOMString containing a integer indicating how many characters must be left at the right (for left-to-right
@@ -36,9 +36,9 @@ export default class HTMLTableRowElement extends HTMLElement {
      * @type {number}
      * @deprecated
      */
-    get chOff() {
-        return 0;
-    }
+  get chOff() {
+    return 0;
+  }
 
     /**
      * Set align of element
@@ -46,11 +46,11 @@ export default class HTMLTableRowElement extends HTMLElement {
      * @param {string} value
      * @deprecated
      */
-    set vAlign(value) {
-        if (['top', 'middle', 'bottom', 'baseline'].indexOf(value) !== -1) {
-            this.setAttribute('valign', value);
-        }
+  set vAlign(value) {
+    if (['top', 'middle', 'bottom', 'baseline'].indexOf(value) !== -1) {
+      this.setAttribute('valign', value);
     }
+  }
 
     /**
      * Is a DOMString representing an enumerated value indicating how the content of the cell must be vertically
@@ -60,9 +60,9 @@ export default class HTMLTableRowElement extends HTMLElement {
      * @type {string}
      * @deprecated
      */
-    get vAlign() {
-        return this.getAttribute('valign');
-    }
+  get vAlign() {
+    return this.getAttribute('valign');
+  }
 
     /**
      * Is a DOMString containing an enumerated value reflecting the align attribute. It indicates the alignment of the
@@ -72,20 +72,20 @@ export default class HTMLTableRowElement extends HTMLElement {
      * @type {string}
      * @deprecated
      */
-    get align() {
-        return this.getAttribute('align');
-    }
+  get align() {
+    return this.getAttribute('align');
+  }
 
     /**
      * Set align of element
      *
      * @param {string} value
      */
-    set align(value) {
-        if (['left', 'right', 'center'].indexOf(value) !== 1) {
-            this.setAttribute('align', value);
-        }
+  set align(value) {
+    if (['left', 'right', 'center'].indexOf(value) !== 1) {
+      this.setAttribute('align', value);
     }
+  }
 
     /**
      * Returns a long value which gives the logical position of the row within the table section it belongs to.
@@ -93,13 +93,13 @@ export default class HTMLTableRowElement extends HTMLElement {
      *
      * @return {number}
      */
-    get sectionRowIndex() {
-        if (this.parentNode === null) {
-            return -1;
-        }
-
-        return this.parentNode.rows.indexOf(this);
+  get sectionRowIndex() {
+    if (this.parentNode === null) {
+      return -1;
     }
+
+    return this.parentNode.rows.indexOf(this);
+  }
 
     /**
      * Returns a long value which gives the logical position of the row within the entire table. If the row is not part
@@ -107,49 +107,49 @@ export default class HTMLTableRowElement extends HTMLElement {
      *
      * @type {number}
      */
-    get rowIndex() {
-        if (this.parentNode === null) {
-            return -1;
-        }
-
-        if (this.parentNode.parentNode === null) {
-            return -1;
-        }
-
-        let inSection = this.sectionRowIndex;
-        let section = this.parentNode;
-        let table = this.parentNode.parentNode;
-        let index = 0;
-        if (section.nodeName === 'thead') {
-            return inSection;
-        }
-
-        if (table.tHead !== null) {
-            index += table.tHead.rows.length;
-        }
-
-        const tBodies = table.tBodies;
-        if (tBodies.length !== 0) {
-            let found = false;
-            table.tBodies.every((tbody) => {
-                if (tbody === section) {
-                    found = true;
-                    return false;
-                }
-
-                index += tbody.rows.length;
-            });
-            if (found) {
-                return index + inSection;
-            }
-        }
-
-        if (section.nodeName === 'tfoot') {
-            return index + inSection;
-        }
-
-        return -1;
+  get rowIndex() {
+    if (this.parentNode === null) {
+      return -1;
     }
+
+    if (this.parentNode.parentNode === null) {
+      return -1;
+    }
+
+    let inSection = this.sectionRowIndex;
+    let section = this.parentNode;
+    let table = this.parentNode.parentNode;
+    let index = 0;
+    if (section.nodeName === 'thead') {
+      return inSection;
+    }
+
+    if (table.tHead !== null) {
+      index += table.tHead.rows.length;
+    }
+
+    const tBodies = table.tBodies;
+    if (tBodies.length !== 0) {
+      let found = false;
+      table.tBodies.every((tbody) => {
+        if (tbody === section) {
+          found = true;
+          return false;
+        }
+
+        index += tbody.rows.length;
+      });
+      if (found) {
+        return index + inSection;
+      }
+    }
+
+    if (section.nodeName === 'tfoot') {
+      return index + inSection;
+    }
+
+    return -1;
+  }
 
     /**
      * Method creates new &lt;td&gt; element and adds it to row.
@@ -157,18 +157,18 @@ export default class HTMLTableRowElement extends HTMLElement {
      * @param {number} index
      * @return {HTMLElement}
      */
-    insertCell(index = -1) {
-        let row = this.ownerDocument.createElement('td');
-        if (index === -1 || index === this.children.length) {
-            this.appendChild(row);
-        } else if (index < this.children.length - 1) {
-            this.insertBefore(row, this.children[index]);
-        } else {
-            throw new DOMException('IndexSizeError');
-        }
-
-        return row;
+  insertCell(index = -1) {
+    let row = this.ownerDocument.createElement('td');
+    if (index === -1 || index === this.children.length) {
+      this.appendChild(row);
+    } else if (index < this.children.length - 1) {
+      this.insertBefore(row, this.children[index]);
+    } else {
+      throw new DOMException('IndexSizeError');
     }
+
+    return row;
+  }
 
     /**
      * Removes the cell at the given position in the section. If the given position is greater (or equal as it starts
@@ -177,13 +177,13 @@ export default class HTMLTableRowElement extends HTMLElement {
      *
      * @param {number} index
      */
-    deleteCell(index) {
-        if (index >= this.children.length || index < 0) {
-            throw new DOMException('IndexSizeError');
-        }
-
-        this.removeChild(this.children[index]);
+  deleteCell(index) {
+    if (index >= this.children.length || index < 0) {
+      throw new DOMException('IndexSizeError');
     }
+
+    this.removeChild(this.children[index]);
+  }
 }
 
 /**

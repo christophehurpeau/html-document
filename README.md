@@ -35,7 +35,7 @@ See the generated API [here](https://html-document.github.io/html-document/docs/
 Inject `window`, `document`, `Document`, `DocumentFragment`, `Node` and `Event` [in the global scope](src/global.js).
 
 ```js
-import 'html-document/lib/global'; // or var Document = require('html-document/lib/global');
+import 'html-document/global'; // or var Document = require('html-document/global');
 
 let textNode = document.createTextNode('Hello');
 expect(textNode.textContent, 'Hello');

@@ -17,30 +17,30 @@ export default class HTMLTableElement extends HTMLElement {
      *
      * @type {HTMLTableCaptionElement|null}
      */
-    get caption() {
-        return this._childNodeFind(child => child.tagName === 'caption');
-    }
+  get caption() {
+    return this._childNodeFind(child => child.tagName === 'caption');
+  }
 
     /**
      * @param {HTMLTableCaptionElement|null} element
      * @ignore
      */
-    set caption(element) {
-        if (element.tagName !== 'caption') {
-            throw new DOMException('HierarchyRequestError');
-        }
-
-        let previousCaption = this.caption;
-        if (previousCaption) {
-            this.removeChild(previousCaption);
-        }
-
-        if (this.firstChild) {
-            this.insertBefore(element, this.firstChild);
-        } else {
-            this.appendChild(element);
-        }
+  set caption(element) {
+    if (element.tagName !== 'caption') {
+      throw new DOMException('HierarchyRequestError');
     }
+
+    let previousCaption = this.caption;
+    if (previousCaption) {
+      this.removeChild(previousCaption);
+    }
+
+    if (this.firstChild) {
+      this.insertBefore(element, this.firstChild);
+    } else {
+      this.appendChild(element);
+    }
+  }
 
     /**
      * Is an {@link HTMLTableSectionElement} representing the first &lt;thead&gt; that is a child of the element,
@@ -53,35 +53,35 @@ export default class HTMLTableElement extends HTMLElement {
      *
      * @type {HTMLTableSectionElement|null}
      */
-    get tHead() {
-        return this._childNodeFind(child => child.tagName === 'thead');
-    }
+  get tHead() {
+    return this._childNodeFind(child => child.tagName === 'thead');
+  }
 
     /**
      * @ignore
      * @param {HTMLTableSectionElement|null} element
      */
-    set tHead(element) {
-        if (element.tagName !== 'thead') {
-            throw new DOMException('HierarchyRequestError');
-        }
-
-        const previousTHead = this.tHead;
-        if (previousTHead) {
-            this.removeChild(previousTHead);
-        }
-
-        if (!this.children.some((child) => {
-            if (child.tagName !== 'caption' && child.tagName !== 'colgroup') {
-                this.insertBefore(element, child);
-                return true;
-            }
-
-            return false;
-        })) {
-            this.appendChild(element);
-        }
+  set tHead(element) {
+    if (element.tagName !== 'thead') {
+      throw new DOMException('HierarchyRequestError');
     }
+
+    const previousTHead = this.tHead;
+    if (previousTHead) {
+      this.removeChild(previousTHead);
+    }
+
+    if (!this.children.some((child) => {
+      if (child.tagName !== 'caption' && child.tagName !== 'colgroup') {
+        this.insertBefore(element, child);
+        return true;
+      }
+
+      return false;
+    })) {
+      this.appendChild(element);
+    }
+  }
 
     /**
      * Is an {@link HTMLTableSectionElement} representing the first &lt;tfoot&gt; that is a child of the element,
@@ -95,35 +95,35 @@ export default class HTMLTableElement extends HTMLElement {
      *
      * @type {HTMLElement|null}
      */
-    get tFoot() {
-        return this._childNodeFind(child => child.tagName === 'tfoot');
-    }
+  get tFoot() {
+    return this._childNodeFind(child => child.tagName === 'tfoot');
+  }
 
     /**
      * @ignore
      * @param {HTMLElement|null} element
      */
-    set tFoot(element) {
-        if (element.tagName !== 'tfoot') {
-            throw new DOMException('HierarchyRequestError');
-        }
-
-        const previousTFoot = this.tFoot;
-        if (previousTFoot) {
-            this.removeChild(previousTFoot);
-        }
-
-        if (!this.children.some((child) => {
-            if (child.tagName !== 'caption' && child.tagName !== 'colgroup' && child.tagName !== 'thead') {
-                this.insertBefore(element, child);
-                return true;
-            }
-
-            return false;
-        })) {
-            this.appendChild(element);
-        }
+  set tFoot(element) {
+    if (element.tagName !== 'tfoot') {
+      throw new DOMException('HierarchyRequestError');
     }
+
+    const previousTFoot = this.tFoot;
+    if (previousTFoot) {
+      this.removeChild(previousTFoot);
+    }
+
+    if (!this.children.some((child) => {
+      if (child.tagName !== 'caption' && child.tagName !== 'colgroup' && child.tagName !== 'thead') {
+        this.insertBefore(element, child);
+        return true;
+      }
+
+      return false;
+    })) {
+      this.appendChild(element);
+    }
+  }
 
     /**
      * Returns a live {@link HTMLCollection} containing all the rows of the element,
@@ -135,37 +135,37 @@ export default class HTMLTableElement extends HTMLElement {
      * @type {HTMLElement[]}
      * @readonly
      */
-    get rows() {
-        let result = [];
-        if (this.tHead !== null) {
-            this.tHead.children.forEach((element) => {
-                if (element.tagName === 'tr') {
-                    result.push(element);
-                }
-            });
+  get rows() {
+    let result = [];
+    if (this.tHead !== null) {
+      this.tHead.children.forEach((element) => {
+        if (element.tagName === 'tr') {
+          result.push(element);
         }
-
-        const tBodies = this.tBodies;
-        if (tBodies.length !== 0) {
-            tBodies.forEach((body) => {
-                body.children.forEach((element) => {
-                    if (element.tagName === 'tr') {
-                        result.push(element);
-                    }
-                });
-            });
-        }
-
-        if (this.tFoot !== null) {
-            this.tFoot.children.forEach((element) => {
-                if (element.tagName === 'tr') {
-                    result.push(element);
-                }
-            });
-        }
-
-        return result;
+      });
     }
+
+    const tBodies = this.tBodies;
+    if (tBodies.length !== 0) {
+      tBodies.forEach((body) => {
+        body.children.forEach((element) => {
+          if (element.tagName === 'tr') {
+            result.push(element);
+          }
+        });
+      });
+    }
+
+    if (this.tFoot !== null) {
+      this.tFoot.children.forEach((element) => {
+        if (element.tagName === 'tr') {
+          result.push(element);
+        }
+      });
+    }
+
+    return result;
+  }
 
     /**
      * Returns a live HTMLCollection containing all the &lt;tbody&gt; of the element. The HTMLCollection is live
@@ -174,9 +174,9 @@ export default class HTMLTableElement extends HTMLElement {
      * @type {HTMLElement[]}
      * @readonly
      */
-    get tBodies() {
-        return this.children.filter(element => element.tagName === 'tbody');
-    }
+  get tBodies() {
+    return this.children.filter(element => element.tagName === 'tbody');
+  }
 
     /**
      * Returns an HTMLElement representing the first &lt;thead&gt; that is a child of the element.
@@ -186,30 +186,30 @@ export default class HTMLTableElement extends HTMLElement {
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableElement/createTHead
      * @return {HTMLElement}
      */
-    createTHead() {
-        let tHead = this.tHead;
+  createTHead() {
+    let tHead = this.tHead;
 
-        if (tHead !== null) {
-            return tHead;
-        }
-
-        tHead = this.ownerDocument.createElement('thead');
-        this.tHead = tHead;
-        return tHead;
+    if (tHead !== null) {
+      return tHead;
     }
+
+    tHead = this.ownerDocument.createElement('thead');
+    this.tHead = tHead;
+    return tHead;
+  }
 
     /**
      * Removes the first &lt;thead&gt; that is a child of the element.
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableElement/deleteTHead
      */
-    deleteTHead() {
-        let tHead = this.tHead;
+  deleteTHead() {
+    let tHead = this.tHead;
 
-        if (tHead !== null) {
-            this.removeChild(tHead);
-        }
+    if (tHead !== null) {
+      this.removeChild(tHead);
     }
+  }
 
     /**
      * Returns an {@link HTMLElement} representing the first &lt;tfoot&gt; that is a child of the element.
@@ -220,30 +220,30 @@ export default class HTMLTableElement extends HTMLElement {
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableElement/createTFoot
      * @return {HTMLElement}
      */
-    createTFoot() {
-        let tFoot = this.tFoot;
+  createTFoot() {
+    let tFoot = this.tFoot;
 
-        if (tFoot !== null) {
-            return tFoot;
-        }
-
-        tFoot = this.ownerDocument.createElement('tfoot');
-        this.tFoot = tFoot;
-        return tFoot;
+    if (tFoot !== null) {
+      return tFoot;
     }
+
+    tFoot = this.ownerDocument.createElement('tfoot');
+    this.tFoot = tFoot;
+    return tFoot;
+  }
 
     /**
      * Removes the first &lt;tfoot&gt; that is a child of the element.
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableElement/deleteTFoot
      */
-    deleteTFoot() {
-        let tFoot = this.tFoot;
+  deleteTFoot() {
+    let tFoot = this.tFoot;
 
-        if (tFoot !== null) {
-            this.removeChild(tFoot);
-        }
+    if (tFoot !== null) {
+      this.removeChild(tFoot);
     }
+  }
 
     /**
      * Returns an {@link HTMLElement} representing the first &lt;caption&gt; that is a child of the element.
@@ -252,48 +252,48 @@ export default class HTMLTableElement extends HTMLElement {
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableElement/createCaption
      * @return {HTMLElement}
      */
-    createCaption() {
-        let caption = this.caption;
+  createCaption() {
+    let caption = this.caption;
 
-        if (caption !== null) {
-            return caption;
-        }
-
-        caption = this.ownerDocument.createElement('caption');
-        this.caption = caption;
-        return caption;
+    if (caption !== null) {
+      return caption;
     }
+
+    caption = this.ownerDocument.createElement('caption');
+    this.caption = caption;
+    return caption;
+  }
 
     /**
      * Removes the first &lt;caption&gt; that is a child of the element.
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableElement/deleteCaption
      */
-    deleteCaption() {
-        let caption = this.caption;
+  deleteCaption() {
+    let caption = this.caption;
 
-        if (caption !== null) {
-            this.removeChild(caption);
-        }
+    if (caption !== null) {
+      this.removeChild(caption);
     }
+  }
 
     /**
      * Method creates &lt;tbody&gt; element and puts it in particular place
      *
      * @private
      */
-    _createTBody() {
-        let tBody = this.ownerDocument.createElement('tbody');
-        let tFoot = this.tFoot;
+  _createTBody() {
+    let tBody = this.ownerDocument.createElement('tbody');
+    let tFoot = this.tFoot;
 
-        if (tFoot) {
-            this.insertBefore(tBody, tFoot);
-        } else {
-            this.appendChild(tBody);
-        }
-
-        return tBody;
+    if (tFoot) {
+      this.insertBefore(tBody, tFoot);
+    } else {
+      this.appendChild(tBody);
     }
+
+    return tBody;
+  }
 
     /**
      * Returns an {@link HTMLElement} representing a new row of the table. It inserts it in the rows collection
@@ -305,46 +305,46 @@ export default class HTMLTableElement extends HTMLElement {
      * @param {number} [index=-1]
      * @return {HTMLElement}
      */
-    insertRow(index = -1) {
-        let row = this.ownerDocument.createElement('tr');
-        let tBody = null;
-        let tBodies = this.tBodies;
+  insertRow(index = -1) {
+    let row = this.ownerDocument.createElement('tr');
+    let tBody = null;
+    let tBodies = this.tBodies;
 
-        if (tBodies.length === 0) {
-            tBody = this._createTBody();
-        } else {
-            tBody = tBodies[tBodies.length - 1];
-        }
-
-        if (index === -1 || index === tBody.length) {
-            tBody.appendChild(row);
-        } else if (index < tBody.length - 1) {
-            tBody.insertBefore(row, tBody.children[index]);
-        } else {
-            throw new DOMException('IndexSizeError');
-        }
-
-        return row;
+    if (tBodies.length === 0) {
+      tBody = this._createTBody();
+    } else {
+      tBody = tBodies[tBodies.length - 1];
     }
+
+    if (index === -1 || index === tBody.length) {
+      tBody.appendChild(row);
+    } else if (index < tBody.length - 1) {
+      tBody.insertBefore(row, tBody.children[index]);
+    } else {
+      throw new DOMException('IndexSizeError');
+    }
+
+    return row;
+  }
 
     /**
      * @inheritdoc
      */
-    appendChild(element) {
-        if (element.tagName === 'tr') {
-            let tBodies = this.tBodies;
-            let tBody = null;
-            if (tBodies.length === 0) {
-                tBody = this._createTBody();
-            } else {
-                tBody = tBodies[tBodies.length - 1];
-            }
+  appendChild(element) {
+    if (element.tagName === 'tr') {
+      let tBodies = this.tBodies;
+      let tBody = null;
+      if (tBodies.length === 0) {
+        tBody = this._createTBody();
+      } else {
+        tBody = tBodies[tBodies.length - 1];
+      }
 
-            return tBody.appendChild(element);
-        }
-
-        return super.appendChild(element);
+      return tBody.appendChild(element);
     }
+
+    return super.appendChild(element);
+  }
 }
 
 /**

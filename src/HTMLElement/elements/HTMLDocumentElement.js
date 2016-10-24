@@ -13,28 +13,28 @@ export default class HTMLDocumentElement extends HTMLElement {
      * @ignore
      * @param {string} value
      */
-    set innerHTML(value) {
-        super.innerHTML = value;
+  set innerHTML(value) {
+    super.innerHTML = value;
 
-        let htmlElement = this._childNodeFind(node => node.tagName === 'html');
+    let htmlElement = this._childNodeFind(node => node.tagName === 'html');
 
-        if (htmlElement !== null) {
-            let child;
-            while (child = htmlElement.firstChild) {
-                this.appendChild(child);
-            }
+    if (htmlElement !== null) {
+      let child;
+      while (child = htmlElement.firstChild) {
+        this.appendChild(child);
+      }
 
-            this.removeChild(htmlElement); // Remove html
-        }
+      this.removeChild(htmlElement); // Remove html
     }
+  }
 
     /**
      * @ignore
      * @type {string}
      */
-    get innerHTML() {
-        return super.innerHTML;
-    }
+  get innerHTML() {
+    return super.innerHTML;
+  }
 }
 
 /**

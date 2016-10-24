@@ -8,36 +8,36 @@ export default class Text extends Node {
     /**
      * @param {string} textContent
      */
-    constructor(textContent) {
-        super();
-        this.value = textContent;
-    }
+  constructor(textContent) {
+    super();
+    this.value = textContent;
+  }
 
-    _toHTML() {
-        return escapeHTML(this.value);
-    }
+  _toHTML() {
+    return escapeHTML(this.value);
+  }
 
     /**
      * @return {string}
      */
-    get textContent() {
-        return this.value;
-    }
+  get textContent() {
+    return this.value;
+  }
 
     /**
      * @param {string} textContent
      */
-    set textContent(textContent) {
-        this.value = textContent;
-    }
+  set textContent(textContent) {
+    this.value = textContent;
+  }
 
-    get nodeValue() {
-        return this.textContent;
-    }
+  get nodeValue() {
+    return this.textContent;
+  }
 
-    set nodeValue(value) {
-        this.textContent = value;
-    }
+  set nodeValue(value) {
+    this.textContent = value;
+  }
 }
 
 /**

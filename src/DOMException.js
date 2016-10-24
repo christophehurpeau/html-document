@@ -1,29 +1,29 @@
 const exceptions = {
-    IndexSizeError: { code: 1, message: 'The index is not in the allowed range.' },
-    HierarchyRequestError: { code: 3, message: 'The operation would yield an incorrect node tree.' },
-    WrongDocumentError: { code: 4, message: 'The object is in the wrong document.' },
-    InvalidCharacterError: { code: 5, message: 'The string contains invalid characters.' },
-    NoModificationAllowedError: { code: 7, message: 'The object can not be modified.' },
-    NotFoundError: { code: 8, message: 'The object can not be found here.' },
-    NotSupportedError: { code: 9, message: 'The operation is not supported.' },
-    InvalidStateError: { code: 11, message: 'The object is in an invalid state.' },
-    SyntaxError: { code: 12, message: 'The string did not match the expected pattern.' },
-    InvalidModificationError: { code: 13, message: 'The object can not be modified in this way.' },
-    NamespaceError: { code: 14, message: 'The operation is not allowed by Namespaces in XML.' },
-    InvalidAccessError: { code: 15, message: 'The object does not support the operation or argument.' },
-    SecurityError: { code: 18, message: 'The operation is insecure.' },
-    NetworkError: { code: 19, message: 'A network error occurred.' },
-    AbortError: { code: 20, message: 'The operation was aborted.' },
-    URLMismatchError: { code: 21, message: 'The given URL does not match another URL.' },
-    QuotaExceededError: { code: 22, message: 'The quota has been exceeded.' },
-    TimeoutError: { code: 23, message: 'The operation timed out.' },
-    InvalidNodeTypeError: {
-        code: 24,
-        message: 'The supplied node is incorrect or has an incorrect ancestor for this operation.',
-    },
-    DataCloneError: { code: 25, message: 'The object can not be cloned.' },
-    EncodingError: { message: 'The encoding operation (either encoded or decoding) failed.' },
-    NotReadableError: { message: 'The I/O read operation failed.' },
+  IndexSizeError: { code: 1, message: 'The index is not in the allowed range.' },
+  HierarchyRequestError: { code: 3, message: 'The operation would yield an incorrect node tree.' },
+  WrongDocumentError: { code: 4, message: 'The object is in the wrong document.' },
+  InvalidCharacterError: { code: 5, message: 'The string contains invalid characters.' },
+  NoModificationAllowedError: { code: 7, message: 'The object can not be modified.' },
+  NotFoundError: { code: 8, message: 'The object can not be found here.' },
+  NotSupportedError: { code: 9, message: 'The operation is not supported.' },
+  InvalidStateError: { code: 11, message: 'The object is in an invalid state.' },
+  SyntaxError: { code: 12, message: 'The string did not match the expected pattern.' },
+  InvalidModificationError: { code: 13, message: 'The object can not be modified in this way.' },
+  NamespaceError: { code: 14, message: 'The operation is not allowed by Namespaces in XML.' },
+  InvalidAccessError: { code: 15, message: 'The object does not support the operation or argument.' },
+  SecurityError: { code: 18, message: 'The operation is insecure.' },
+  NetworkError: { code: 19, message: 'A network error occurred.' },
+  AbortError: { code: 20, message: 'The operation was aborted.' },
+  URLMismatchError: { code: 21, message: 'The given URL does not match another URL.' },
+  QuotaExceededError: { code: 22, message: 'The quota has been exceeded.' },
+  TimeoutError: { code: 23, message: 'The operation timed out.' },
+  InvalidNodeTypeError: {
+    code: 24,
+    message: 'The supplied node is incorrect or has an incorrect ancestor for this operation.',
+  },
+  DataCloneError: { code: 25, message: 'The object can not be cloned.' },
+  EncodingError: { message: 'The encoding operation (either encoded or decoding) failed.' },
+  NotReadableError: { message: 'The I/O read operation failed.' },
 };
 
 /**
@@ -37,34 +37,34 @@ export default class DOMException {
      *
      * @param {string} name
      */
-    constructor(name) {
-        this._name = name;
-        Error.captureStackTrace(this, DOMException);
-    }
+  constructor(name) {
+    this._name = name;
+    Error.captureStackTrace(this, DOMException);
+  }
 
     /**
      * @type {number}
      * @readonly
      */
-    get code() {
-        return exceptions[this._name].code || 0;
-    }
+  get code() {
+    return exceptions[this._name].code || 0;
+  }
 
     /**
      * @type {string}
      * @readonly
      */
-    get name() {
-        return this._name;
-    }
+  get name() {
+    return this._name;
+  }
 
     /**
      * @type {string}
      * @readonly
      */
-    get message() {
-        return exceptions[this._name].message;
-    }
+  get message() {
+    return exceptions[this._name].message;
+  }
 }
 
 /**

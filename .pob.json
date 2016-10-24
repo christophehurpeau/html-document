@@ -1,0 +1,9 @@
+{
+  "envs": [
+    "node6",
+    "older-node"
+  ],
+  "react": false,
+  "documentation": true,
+  "testing": true
+}
