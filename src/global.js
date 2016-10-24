@@ -9,3 +9,5 @@ global.Event = Event;
 global.Node = Node;
 global.Document = Document;
 global.DocumentFragment = DocumentFragment;
+
+global.Test = test;
