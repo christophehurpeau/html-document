@@ -275,3 +275,17 @@ test('Node.textContent', () => {
     expect(span1.childNodes.length, 1);
     expect(span1.childNodes[0].value, 'hello world');
 });
+
+test('Clone documentFragment node', () => {
+    const fragment = document.createDocumentFragment();
+    fragment.innerHTML = '<p>some node text</p><span></span>';
+    const copy = fragment.cloneNode();
+    expect(copy.innerHTML, '');
+});
+
+test('Clone documentFragment node deep', () => {
+    const fragment = document.createDocumentFragment();
+    fragment.innerHTML = '<p>some node text</p><span></span>';
+    const copy = fragment.cloneNode(true);
+    expect(copy.innerHTML, '<p>some node text</p><span></span>');
+});

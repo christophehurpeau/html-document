@@ -282,4 +282,18 @@ test('Node.textContent', function () {
     expect(span1.childNodes.length, 1);
     expect(span1.childNodes[0].value, 'hello world');
 });
+
+test('Clone documentFragment node', function () {
+    var fragment = document.createDocumentFragment();
+    fragment.innerHTML = '<p>some node text</p><span></span>';
+    var copy = fragment.cloneNode();
+    expect(copy.innerHTML, '');
+});
+
+test('Clone documentFragment node deep', function () {
+    var fragment = document.createDocumentFragment();
+    fragment.innerHTML = '<p>some node text</p><span></span>';
+    var copy = fragment.cloneNode(true);
+    expect(copy.innerHTML, '<p>some node text</p><span></span>');
+});
 //# sourceMappingURL=ParentNode.js.map

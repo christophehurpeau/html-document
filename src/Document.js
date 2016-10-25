@@ -56,7 +56,7 @@ export default class Document extends ParentNode {
      * @return {Comment}
     */
     createComment(data) {
-        let comment = new Comment(data);
+        const comment = new Comment(data);
         comment._ownerDocument = this;
         return comment;
     }
@@ -69,7 +69,7 @@ export default class Document extends ParentNode {
      * @return {DocumentFragment}
     */
     createDocumentFragment() {
-        let fragment = new DocumentFragment();
+        const fragment = new DocumentFragment();
         fragment._ownerDocument = this;
         return fragment;
     }
@@ -85,7 +85,7 @@ export default class Document extends ParentNode {
     createElement(name) {
         name = name.toLowerCase();
         const ElementClass = elementClasses.get(name) || HTMLElement;
-        let element = new ElementClass();
+        const element = new ElementClass();
 
         element._ownerDocument = this;
 
@@ -105,7 +105,7 @@ export default class Document extends ParentNode {
      * @return {Text}
     */
     createTextNode(textContent) {
-        let text = new Text(textContent);
+        const text = new Text(textContent);
         text._ownerDocument = this;
         return text;
     }
