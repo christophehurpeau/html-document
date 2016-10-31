@@ -1,4 +1,5 @@
 import HTMLElement from '../../HTMLElement';
+import DOMException from '../../DOMException';
 
 export default class HTMLTableRowElement extends HTMLElement {
     constructor() {
@@ -82,7 +83,7 @@ export default class HTMLTableRowElement extends HTMLElement {
      * @param {string} value
      */
     set align(value) {
-        if (['left', 'right', 'center'].indexOf(value) !== 1) {
+        if (['left', 'right', 'center'].indexOf(value) !== -1) {
             this.setAttribute('align', value);
         }
     }
@@ -161,7 +162,7 @@ export default class HTMLTableRowElement extends HTMLElement {
         let row = this.ownerDocument.createElement('td');
         if (index === -1 || index === this.children.length) {
             this.appendChild(row);
-        } else if (index < this.children.length - 1) {
+        } else if (index < this.children.length) {
             this.insertBefore(row, this.children[index]);
         } else {
             throw new DOMException('IndexSizeError');
