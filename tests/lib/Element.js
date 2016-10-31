@@ -38,16 +38,30 @@ test('Element getElementsByTagName should search elements everywhere', function 
 
 test('Element firstElementChild', function () {
     var document = new Document();
-    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a></div>';
+    document.body.innerHTML = '<div>\n\n<span></span>This is text<b></b> and more text<a></a></div>';
     var div = document.body.firstChild;
     _proclaim2['default'].equal(div.firstElementChild.tagName, 'span');
 });
 
+test('Element firstElementChild on text node', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div>Several text nodes<!-- comment -->text</div>';
+    var div = document.body.firstChild;
+    _proclaim2['default'].isNull(div.firstElementChild);
+});
+
 test('Element lastElementChild', function () {
     var document = new Document();
-    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a></div>';
+    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a>Some text</div>';
     var div = document.body.firstChild;
     _proclaim2['default'].equal(div.lastElementChild.tagName, 'a');
+});
+
+test('Element lastElementChild on text node', function () {
+    var document = new Document();
+    document.body.innerHTML = '<div>Several text nodes<!-- comment -->text</div>';
+    var div = document.body.firstChild;
+    _proclaim2['default'].isNull(div.lastElementChild);
 });
 
 test('Element nextElementSibling', function () {
@@ -113,5 +127,15 @@ test('getElementsByClassName returns live HTMLCollection', function () {
     var somes = document.getElementsByClassName('some');
     document.body.innerHTML = '<b class="some class"></b><div><b class="some"></b></div>';
     _proclaim2['default'].equal(somes.length, 2);
+});
+
+test('get/set ID attribute', function () {
+    var document = new Document();
+    document.body.innerHTML = '<b id="some"></b><a></a>';
+    var b = document.body.firstChild;
+    var a = document.body.lastChild;
+    a.id = 'value';
+    _proclaim2['default'].equal(b.id, 'some');
+    _proclaim2['default'].equal(a.outerHTML, '<a id="value"></a>');
 });
 //# sourceMappingURL=Element.js.map

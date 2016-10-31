@@ -73,7 +73,7 @@ export default class Element extends ParentNode {
      * @readonly
      */
     get firstElementChild() {
-        return this._childNodes[0] || null;
+        return this.children[0] || null;
     }
 
     /**
@@ -83,7 +83,8 @@ export default class Element extends ParentNode {
      * @readonly
      */
     get lastElementChild() {
-        return this._childNodes.length === 0 ? null : this._childNodes[this._childNodes.length - 1];
+        const children = this.children;
+        return children.length === 0 ? null : children[this.children.length - 1];
     }
 
     /**

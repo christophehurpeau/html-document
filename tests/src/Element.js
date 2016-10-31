@@ -33,16 +33,30 @@ test('Element getElementsByTagName should search elements everywhere', () => {
 
 test('Element firstElementChild', () => {
     const document = new Document();
-    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a></div>';
-    let div = document.body.firstChild;
+    document.body.innerHTML = '<div>\n\n<span></span>This is text<b></b> and more text<a></a></div>';
+    const div = document.body.firstChild;
     assert.equal(div.firstElementChild.tagName, 'span');
+});
+
+test('Element firstElementChild on text node', () => {
+    const document = new Document();
+    document.body.innerHTML = '<div>Several text nodes<!-- comment -->text</div>';
+    const div = document.body.firstChild;
+    assert.isNull(div.firstElementChild);
 });
 
 test('Element lastElementChild', () => {
     const document = new Document();
-    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a></div>';
-    let div = document.body.firstChild;
+    document.body.innerHTML = '<div><span></span>This is text<b></b> and more text<a></a>Some text</div>';
+    const div = document.body.firstChild;
     assert.equal(div.lastElementChild.tagName, 'a');
+});
+
+test('Element lastElementChild on text node', () => {
+    const document = new Document();
+    document.body.innerHTML = '<div>Several text nodes<!-- comment -->text</div>';
+    const div = document.body.firstChild;
+    assert.isNull(div.lastElementChild);
 });
 
 test('Element nextElementSibling', () => {
@@ -108,4 +122,14 @@ test('getElementsByClassName returns live HTMLCollection', () => {
     let somes = document.getElementsByClassName('some');
     document.body.innerHTML = '<b class="some class"></b><div><b class="some"></b></div>';
     assert.equal(somes.length, 2);
+});
+
+test('get/set ID attribute', () => {
+    const document = new Document();
+    document.body.innerHTML = '<b id="some"></b><a></a>';
+    const b = document.body.firstChild;
+    const a = document.body.lastChild;
+    a.id = 'value';
+    assert.equal(b.id, 'some');
+    assert.equal(a.outerHTML, '<a id="value"></a>');
 });
