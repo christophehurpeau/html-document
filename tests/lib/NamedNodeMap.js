@@ -11,18 +11,11 @@ var _proclaim2 = _interopRequireDefault(_proclaim);
 
 var expect = _proclaim2['default'].strictEqual;
 var throws = _proclaim2['default'].throws;
-var doesNotThrow = _proclaim2['default'].doesNotThrow;
 
 var lib = '../../lib/';
 
 var NamedNodeMap = require(lib + 'NamedNodeMap');
 var Document = require(lib + 'Document');
-
-test('Constructor', function () {
-    doesNotThrow( /** @function */function () {
-        new NamedNodeMap();
-    });
-});
 
 test('Length is 0 on create', function () {
     var n = new NamedNodeMap();

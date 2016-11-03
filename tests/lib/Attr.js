@@ -21,13 +21,14 @@ test('Constructor and name attribute', function () {
 
 test('Constructor should throw if name is not set', function () {
     throws(function () {
-        new Attr();
+        var b = new Attr();
+        expect(b);
     });
 });
 
 test('name is readonly', function () {
     var a = new Attr('some', 'value');
-    throws( /** @function */function () {
+    throws(function () {
         a.name = 'value';
     });
 });

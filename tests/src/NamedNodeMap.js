@@ -2,18 +2,11 @@
 import assert from 'proclaim';
 const expect = assert.strictEqual;
 const throws = assert.throws;
-const doesNotThrow = assert.doesNotThrow;
 
 const lib = '../../lib/';
 
 const NamedNodeMap = require(lib + 'NamedNodeMap');
 const Document = require(lib + 'Document');
-
-test('Constructor', () => {
-    doesNotThrow(function () {
-        new NamedNodeMap();
-    });
-});
 
 test('Length is 0 on create', () => {
     let n = new NamedNodeMap();

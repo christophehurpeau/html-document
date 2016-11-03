@@ -14,13 +14,14 @@ test('Constructor and name attribute', () => {
 
 test('Constructor should throw if name is not set', () => {
     throws(() => {
-        new Attr();
+        const b = new Attr();
+        expect(b);
     });
 });
 
 test('name is readonly', () => {
     let a = new Attr('some', 'value');
-    throws(function () {
+    throws(() => {
         a.name = 'value';
     });
 });
