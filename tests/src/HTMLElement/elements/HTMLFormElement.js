@@ -1,5 +1,5 @@
 /* global test */
-import { equal, strictEqual, deepEqual, ok, throws } from 'proclaim';
+import { strictEqual, deepEqual, ok, throws } from 'proclaim';
 const lib = '../../../../lib/';
 
 const HTMLFormElement = require(lib + 'HTMLElement/elements/HTMLFormElement');
@@ -75,7 +75,7 @@ test('Should get inner elements', () => {
 test('Should not set elements', () => {
     let elt = new HTMLFormElement();
     elt._ownerDocument = new Document();
-    throws(function () {
+    throws(() => {
         elt.elements = [];
     });
 });
@@ -114,7 +114,7 @@ test('Should get inner elements length', () => {
 test('Should not set length', () => {
     let elt = new HTMLFormElement();
     elt._ownerDocument = new Document();
-    throws(function () {
+    throws(() => {
         elt.length = 2;
     });
 });
@@ -178,7 +178,7 @@ test('Should call submit event on submit', (done) => {
     let elt = new HTMLFormElement();
     elt._ownerDocument = new Document();
 
-    elt.addEventListener('submit', function (event) {
+    elt.addEventListener('submit', () => {
         done();
     }, true);
     elt.submit();
@@ -188,7 +188,7 @@ test('Should call submit event on reset', (done) => {
     let elt = new HTMLFormElement();
     elt._ownerDocument = new Document();
 
-    elt.addEventListener('reset', function (event) {
+    elt.addEventListener('reset', () => {
         done();
     }, true);
     elt.reset();
@@ -212,7 +212,7 @@ test('Should not clear all values on reset if event is prevented', () => {
     input.type = 'text';
     input.setAttribute('value', 'some');
     elt.appendChild(input);
-    elt.addEventListener('reset', function (event) {
+    elt.addEventListener('reset', (event) => {
         event.preventDefault();
     });
     elt.reset();
