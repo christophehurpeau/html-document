@@ -94,10 +94,10 @@ export default class HTMLTableSectionElement extends HTMLElement {
      * @return {HTMLElement}
      */
     insertRow(index = -1) {
-        let row = this.ownerDocument.createElement('tr');
+        const row = this.ownerDocument.createElement('tr');
         if (index === -1 || index === this.children.length) {
             this.appendChild(row);
-        } else if (index < this.children.length - 1) {
+        } else if (index < this.children.length) {
             this.insertBefore(row, this.children[index]);
         } else {
             throw new DOMException('IndexSizeError');
